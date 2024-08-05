@@ -2,7 +2,14 @@
 
 public interface IModule : IIdentifiable
 {
-    string Name { get; set; }
-    string Version { get; set; }
-    string? Description { get; set; }
+    public abstract record Properties()
+    {
+        public required string Name { get; init; }
+        public required string Version { get; init; }
+        private string? Description { get; init; }
+        private string? Author { get; init; }
+        private string? License { get; init; }
+        public required Dictionary<string, string> Dependencies { get; init; }
+    }
+    public abstract Dictionary<string, string> Dependencies { get; init; }
 }
