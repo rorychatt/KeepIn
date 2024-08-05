@@ -8,8 +8,7 @@ namespace KeepIn.Api.Controllers;
 [Route("[controller]")]
 public class UsersController : ControllerBase
 {
-    
-    private readonly IUserRepository _userRepository = new UserRepository();
+    private readonly UserRepository _userRepository = new();
     
     [HttpGet]
     public ActionResult<List<User>> GetAllUsers()
