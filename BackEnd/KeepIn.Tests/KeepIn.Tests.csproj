@@ -25,6 +25,7 @@
     <ItemGroup>
       <ProjectReference Include="..\KeepIn.Api\KeepIn.Api.csproj" />
       <ProjectReference Include="..\KeepIn.Business\KeepIn.Business.csproj" />
+      <ProjectReference Include="..\KeepIn.Modules\KeepIn.Modules.csproj" />
     </ItemGroup>
 
 </Project>
