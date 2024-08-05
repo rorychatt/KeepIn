@@ -6,9 +6,12 @@ namespace KeepIn.Business.BaseModule;
 public abstract class BaseModule : IModule
 {
     public string Id { get; init; } = $"module_{Guid.NewGuid()}";
-    public required IModule.Properties Properties { get; init; }
 
-    public Dictionary<string, string> Dependencies { get; init; } = new();
+    public IModule.Properties Properties { get; private set; } = new()
+    {
+        Name = "Base Module",
+        Version = "1.0.0"
+    };
 
     protected BaseModule()
     {
@@ -31,11 +34,10 @@ public abstract class BaseModule : IModule
         if (File.Exists(configFilePath))
         {
             var jsonContent = File.ReadAllText(configFilePath);
-            var configData = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonContent);
-            if (configData == null) return;
-            foreach (var kvp in configData)
+            var configData = JsonSerializer.Deserialize<IModule.Properties>(jsonContent);
+            if (configData != null)
             {
-                Dependencies[kvp.Key] = kvp.Value;
+                Properties = configData;
             }
         }
         else
