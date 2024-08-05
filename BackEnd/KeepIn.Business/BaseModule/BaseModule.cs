@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.IO;
+using System.Text.Json;
 using KeepIn.Business.Contracts;
 
 namespace KeepIn.Business.BaseModule;
@@ -6,12 +7,7 @@ namespace KeepIn.Business.BaseModule;
 public abstract class BaseModule : IModule
 {
     public string Id { get; init; } = $"module_{Guid.NewGuid()}";
-
-    public IModule.Properties Properties { get; private set; } = new()
-    {
-        Name = "Base Module",
-        Version = "1.0.0"
-    };
+    public IModule.Properties? Properties { get; private set; }
 
     protected BaseModule()
     {
@@ -30,19 +26,21 @@ public abstract class BaseModule : IModule
         var className = GetType().Name;
         var configFileName = $"{className}.config.json";
         var configFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFileName);
+        var templateFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BaseModule.config.json");
 
-        if (File.Exists(configFilePath))
+        if (!File.Exists(configFilePath))
         {
-            var jsonContent = File.ReadAllText(configFilePath);
-            var configData = JsonSerializer.Deserialize<IModule.Properties>(jsonContent);
-            if (configData != null)
+            if (File.Exists(templateFilePath))
             {
-                Properties = configData;
+                File.Copy(templateFilePath, configFilePath);
+            }
+            else
+            {
+                throw new FileNotFoundException($"Template configuration file '{templateFilePath}' not found.");
             }
         }
-        else
-        {
-            throw new FileNotFoundException($"Configuration file '{configFileName}' not found.");
-        }
+
+        var jsonContent = File.ReadAllText(configFilePath);
+        Properties = JsonSerializer.Deserialize<IModule.Properties>(jsonContent);
     }
 }

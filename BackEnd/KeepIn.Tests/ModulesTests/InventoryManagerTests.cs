@@ -9,6 +9,7 @@ public class InventoryManagerTests
     public void InventoryManager_ShouldRead_Config()
     {
         var moduleProperties = new InventoryManager().Properties;
+        moduleProperties.Should().NotBeNull();
         moduleProperties.Name.Should().Be("InventoryManager");
         moduleProperties.Dependencies.Should().NotBeNull();
         moduleProperties.Author.Should().Be("KeepIn");
