@@ -20,4 +20,8 @@
         <Using Include="Xunit"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\KeepIn.Business\KeepIn.Business.csproj" />
+    </ItemGroup>
+
 </Project>
