@@ -5,7 +5,6 @@ namespace KeepIn.Api.Models;
 public class UserRepository : IUserRepository
 {
     private readonly Dictionary<string, User> _users = new();
-
     public IEnumerable<User> GetAllUsers()
     {
         return _users.Values;
@@ -16,7 +15,7 @@ public class UserRepository : IUserRepository
         return _users.GetValueOrDefault(id);
     }
 
-    public User? CreateUser(User user)
+    public User? AddUser(User user)
     {
         return !_users.TryAdd(user.Id, user) ? null : user;
     }

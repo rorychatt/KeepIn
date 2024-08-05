@@ -31,7 +31,7 @@ public class UsersController : ControllerBase
     [HttpPost]
     public ActionResult<User> CreateUser(User user)
     {
-        var createdUser = _userRepository.CreateUser(user);
+        var createdUser = _userRepository.AddUser(user);
         if (createdUser == null)
         {
             return BadRequest();
