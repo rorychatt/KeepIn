@@ -9,47 +9,47 @@ public class UserRepositoryTests
     public void UserRepositoryShould_HaveGetAllUsersMethod()
     {
         var userRepository = new UserRepository();
-        
+
         Assert.NotNull(userRepository.GetAllUsers());
     }
-    
+
     [Fact]
     public void UserRepositoryShould_ReturnNullForNonExistingUser()
     {
         var userRepository = new UserRepository();
-        
+
         Assert.Null(userRepository.GetUserById("blob"));
     }
-    
+
     [Fact]
     public void UserRepositoryShould_CreateUser()
     {
         var userRepository = new UserRepository();
-        var user = new User();
-        
+        var user = new User("Bo1231");
+
         Assert.NotNull(userRepository.AddUser(user));
     }
-    
+
     [Fact]
     public void UserRepositoryShould_ReturnUserById()
     {
         var userRepository = new UserRepository();
-        var user = new User();
+        var user = new User("Ba12312");
         var createdUser = userRepository.AddUser(user);
-        
+
         Assert.Equal(createdUser, userRepository.GetUserById(createdUser!.Id));
     }
-    
+
     [Fact]
     public void UserRepositoryShould_NotAddUserWithExistingId()
     {
         var userRepository = new UserRepository();
-        var user = new User();
+        var user = new User("kent1231");
         userRepository.AddUser(user);
-        
-        var badUser = new User { Id = user.Id };
+
+        var badUser = new User("sa11231") { Id = user.Id };
         userRepository.AddUser(badUser);
-        
+
         Assert.Null(userRepository.AddUser(badUser));
     }
 }

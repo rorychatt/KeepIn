@@ -6,37 +6,36 @@ namespace KeepIn.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UsersController : ControllerBase
+public class UsersController(IUserRepository userRepository) : ControllerBase
 {
-    private readonly IUserRepository _userRepository = new UserRepository();
-
     [HttpGet]
-    public ActionResult<List<User>> GetAllUsers()
+    public ActionResult<IEnumerable<UserResponse>> GetAll()
     {
-        return Ok(_userRepository.GetAllUsers());
+        return Ok(userRepository.GetAllUsers().Select(u => new UserResponse(u.Name, u.ActiveModules.Values)));
     }
 
     [HttpGet("{id}")]
-    public ActionResult<User> GetUserById(string id)
+    public ActionResult<UserResponse> GetUserById(string id)
     {
-        var user = _userRepository.GetUserById(id);
-        if (user == null)
+        var user = userRepository.GetUserById(id);
+        if (user is null)
         {
             return NotFound();
         }
 
-        return Ok(user);
+        return Ok(new UserResponse(user.Name, user.ActiveModules.Values));
     }
-
+    
     [HttpPost]
-    public ActionResult<User> CreateUser(User user)
+    public ActionResult<UserResponse> Post([FromBody] UserRequest userRequest)
     {
-        var createdUser = _userRepository.AddUser(user);
-        if (createdUser == null)
+        var user = new User(userRequest.Id);
+        var createdUser = userRepository.AddUser(user);
+        if (createdUser is null)
         {
             return BadRequest();
         }
 
-        return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, user);
+        return CreatedAtAction(nameof(GetUserById), new { id = createdUser!.Id }, new UserResponse(createdUser.Name, createdUser.ActiveModules.Values));
     }
 }
