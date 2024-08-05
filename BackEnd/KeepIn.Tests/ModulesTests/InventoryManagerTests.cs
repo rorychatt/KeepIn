@@ -1,0 +1,16 @@
+﻿using FluentAssertions;
+using KeepIn.Modules.InventoryManager;
+
+namespace KeepIn.Tests.ModulesTests;
+
+public class InventoryManagerTests
+{
+    [Fact]
+    public void InventoryManager_ShouldRead_Config()
+    {
+        var moduleProperties = new InventoryManager().Properties;
+        moduleProperties.Name.Should().Be("InventoryManager");
+        moduleProperties.Dependencies.Should().NotBeNull();
+        moduleProperties.Author.Should().Be("KeepIn");
+    }
+}
