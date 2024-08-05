@@ -1,62 +1,52 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
-using KeepIn.Business.Users;
+using System.Text;
+using FluentAssertions;
+using KeepIn.Api.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace KeepIn.Tests;
 
 public class UsersControllerTests(WebApplicationFactory<Program> factory)
     : IClassFixture<WebApplicationFactory<Program>>
 {
-    [Fact]
-    public async Task UsersControllerShould_ReturnListOfUsers()
-    {
-        var client = factory.CreateClient();
-        var response = await client.GetAsync("/users");
+    private const string BaseUrl = "/api/Users";
+    private readonly HttpClient _client = factory.CreateClient();
 
-        response.EnsureSuccessStatusCode();
-    }
-    
+    private async Task<HttpResponseMessage> CreateUser(string name) => await _client.PostAsync(BaseUrl,
+        new StringContent(JsonSerializer.Serialize(new UserRequest(name)), Encoding.UTF8, "application/json"));
+
     [Fact]
-    public async Task UsersControllerShould_Return404_ForBadUser()
+    public async Task Should_CreateNewUser_When_Post()
     {
-        var client = factory.CreateClient();
-        var response = await client.GetAsync("/users/blob");
-        
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        var response = await CreateUser("Peter321");
+
+        response.StatusCode.Should().Be(HttpStatusCode.Created);
     }
-    
+
     [Fact]
-    public async Task UsersControllerShould_CreateUser()
+    public async Task Should_Return_NewUser_From_CreateUser()
     {
-        var client = factory.CreateClient();
-        var response = await client.PostAsJsonAsync("/users", "Peter2311");
-        
-        response.EnsureSuccessStatusCode();
+        var response = await CreateUser("asd123as000");
+
+        var userResponse = JsonConvert.DeserializeObject<UserResponse>(await response.Content.ReadAsStringAsync());
+
+        userResponse?.Name.Should().Be("asd123as000");
     }
-    
+
     [Fact]
-    public async Task UsersControllerShould_ReturnUserById()
+    public async Task Should_Return_User_When_GetById()
     {
-        var client = factory.CreateClient();
-        var response = await client.PostAsJsonAsync("/users", "Banana12312");
-        var createdUser = await response.Content.ReadFromJsonAsync<User>();
-        
-        var userResponse = await client.GetAsync($"/users/{createdUser!.Id}");
-        
-        userResponse.EnsureSuccessStatusCode();
+        const string expectedName = "gobus121";
+        var createUserResponse = await CreateUser(expectedName);
+        var userResponseRouteValue = createUserResponse.Headers.Location?.ToString().Split('/').Last();
+
+        var getUserResponse = await _client.GetAsync($"{BaseUrl}/{userResponseRouteValue}");
+
+        var userResponse =
+            JsonConvert.DeserializeObject<UserResponse>(await getUserResponse.Content.ReadAsStringAsync());
+
+        userResponse?.Name.Should().Be(expectedName);
     }
-    
-    // [Fact]
-    // public async Task UsersControllerShould_NotAddUserWithExistingId()
-    // {
-    //     var client = factory.CreateClient();
-    //     var response = await client.PostAsJsonAsync("/users", new User());
-    //     var createdUser = await response.Content.ReadFromJsonAsync<User>();
-    //     
-    //     var badUser = new User { Id = createdUser!.Id };
-    //     var badResponse = await client.PostAsJsonAsync("/users", badUser);
-    //     
-    //     Assert.Equal(HttpStatusCode.BadRequest, badResponse.StatusCode);
-    // }
 }

@@ -1,3 +1,3 @@
 ﻿namespace KeepIn.Api.Models;
 
-public record UserRequest(string Id);
+public record UserRequest(string Name);

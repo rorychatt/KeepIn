@@ -2,5 +2,5 @@
 
 public interface IUser : IIdentifiable
 {
-    public Dictionary<string, IModule> ActiveModules { get; init; }
+    public IEnumerable<IModule> ActiveModules { get; init; }
 }

@@ -5,37 +5,34 @@ using Microsoft.AspNetCore.Mvc;
 namespace KeepIn.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/api/[controller]")]
 public class UsersController(IUserRepository userRepository) : ControllerBase
 {
     [HttpGet]
-    public ActionResult<IEnumerable<UserResponse>> GetAll()
+    public ActionResult<IEnumerable<UserResponse>> GetUsers()
     {
-        return Ok(userRepository.GetAllUsers().Select(u => new UserResponse(u.Name, u.ActiveModules.Values)));
+        var users = userRepository.GetAllUsers();
+        return Ok(users.Select(user => new UserResponse(user.Name, user.ActiveModules)));
     }
-
+    
     [HttpGet("{id}")]
     public ActionResult<UserResponse> GetUserById(string id)
     {
         var user = userRepository.GetUserById(id);
-        if (user is null)
+        if (user is not null)
         {
-            return NotFound();
+            return Ok(new UserResponse(user.Name, user.ActiveModules));
         }
 
-        return Ok(new UserResponse(user.Name, user.ActiveModules.Values));
+        return NotFound();
     }
-    
-    [HttpPost]
-    public ActionResult<UserResponse> Post([FromBody] UserRequest userRequest)
-    {
-        var user = new User(userRequest.Id);
-        var createdUser = userRepository.AddUser(user);
-        if (createdUser is null)
-        {
-            return BadRequest();
-        }
 
-        return CreatedAtAction(nameof(GetUserById), new { id = createdUser!.Id }, new UserResponse(createdUser.Name, createdUser.ActiveModules.Values));
+    [HttpPost]
+    public ActionResult<UserResponse> CreateUser(UserRequest userRequest)
+    {
+        var user = new User(userRequest.Name);
+        userRepository.AddUser(user);
+        return CreatedAtAction(nameof(GetUserById), new { id = user.Id },
+            new UserResponse(user.Name, user.ActiveModules));
     }
 }
