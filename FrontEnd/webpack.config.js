@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.ts',
+    entry: './src/scripts/index.ts',
     module: {
         rules: [
             {
@@ -33,7 +33,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            template: './src/index.html'
+            template: './src/html/index.html'
         })
     ],
     devtool: 'source-map'
