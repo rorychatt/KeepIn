@@ -1,0 +1,27 @@
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nav-menu{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.apps-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Adjust the gap between sub-apps as needed */
+    margin: 2rem;
+    align-content: center;
+    justify-content: center;
+}
+
+.app {
+    box-sizing: border-box;
+    border: 1px solid #ccc; /* Optional: Add border for visual separation */
+    padding: 16px; /* Optional: Add padding inside each sub-app */
+}
