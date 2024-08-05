@@ -15,7 +15,7 @@ public class UsersController : ControllerBase
     {
         return Ok(_userRepository.GetAllUsers());
     }
-    
+
     [HttpGet("{id}")]
     public ActionResult<User> GetUserById(string id)
     {
@@ -27,5 +27,16 @@ public class UsersController : ControllerBase
 
         return Ok(user);
     }
-    
+
+    [HttpPost]
+    public ActionResult<User> CreateUser(User user)
+    {
+        var createdUser = _userRepository.CreateUser(user);
+        if (createdUser == null)
+        {
+            return BadRequest();
+        }
+
+        return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, user);
+    }
 }
