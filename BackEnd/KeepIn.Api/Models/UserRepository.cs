@@ -9,4 +9,9 @@ public class UserRepository : IUserRepository
     {
         return _users.Values;
     }
+
+    public User? GetUserById(string id)
+    {
+        return _users.GetValueOrDefault(id);
+    }
 }

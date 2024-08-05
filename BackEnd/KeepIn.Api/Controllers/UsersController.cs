@@ -8,11 +8,24 @@ namespace KeepIn.Api.Controllers;
 [Route("[controller]")]
 public class UsersController : ControllerBase
 {
-    private readonly UserRepository _userRepository = new();
-    
+    private readonly IUserRepository _userRepository = new UserRepository();
+
     [HttpGet]
     public ActionResult<List<User>> GetAllUsers()
     {
         return Ok(_userRepository.GetAllUsers());
     }
+    
+    [HttpGet("{id}")]
+    public ActionResult<User> GetUserById(string id)
+    {
+        var user = _userRepository.GetUserById(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(user);
+    }
+    
 }
