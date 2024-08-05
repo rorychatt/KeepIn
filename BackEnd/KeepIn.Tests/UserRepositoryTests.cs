@@ -11,4 +11,12 @@ public class UserRepositoryTests
         
         Assert.NotNull(userRepository.GetAllUsers());
     }
+    
+    [Fact]
+    public void UserRepositoryShould_ReturnNullForNonExistingUser()
+    {
+        var userRepository = new UserRepository();
+        
+        Assert.Null(userRepository.GetUserById("blob"));
+    }
 }
