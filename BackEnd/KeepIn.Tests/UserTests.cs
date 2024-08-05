@@ -11,4 +11,12 @@ public class UserTests
         
         Assert.NotEqual("user_", user.Id);
     }
+
+    [Fact]
+    public void UserShould_HaveListOfActiveModules()
+    {
+        var user = new User();
+        
+        Assert.NotNull(user.ActiveModules);
+    }
 }
