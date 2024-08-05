@@ -1,5 +1,4 @@
 ﻿using KeepIn.Business.Contracts;
-using KeepIn.Business.Modules;
 
 namespace KeepIn.Business.Users;
 
