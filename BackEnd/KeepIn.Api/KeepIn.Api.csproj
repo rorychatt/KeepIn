@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KeepIn.Business\KeepIn.Business.csproj" />
+    <ProjectReference Include="..\KeepIn.Modules\KeepIn.Modules.csproj" />
   </ItemGroup>
 
 </Project>
