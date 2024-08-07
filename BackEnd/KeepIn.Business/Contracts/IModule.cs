@@ -1,4 +1,6 @@
-﻿namespace KeepIn.Business.Contracts;
+﻿using System.Text.Json.Serialization;
+
+namespace KeepIn.Business.Contracts;
 
 public interface IModule : IIdentifiable
 {
@@ -10,5 +12,11 @@ public interface IModule : IIdentifiable
         public string? Author { get; init; }
         public string? License { get; init; }
         public Dictionary<string, string> Dependencies { get; init; } = new();
+    }
+    
+    public record BaseModuleConfigJson()
+    {
+        [JsonPropertyName("Properties")]
+        public Properties Properties { get; init; }
     }
 }

@@ -3,12 +3,12 @@ using KeepIn.Business.Contracts;
 
 namespace KeepIn.Business.BaseModule;
 
-public abstract class BaseModule : IModule
+public class BaseModule : IModule
 {
     public string Id { get; init; } = $"module_{Guid.NewGuid()}";
     public IModule.Properties? Properties { get; private set; }
 
-    protected BaseModule()
+    public BaseModule()
     {
         try
         {
@@ -24,22 +24,15 @@ public abstract class BaseModule : IModule
     {
         var className = GetType().Name;
         var configFileName = $"{className}.config.json";
-        var configFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFileName);
-        var templateFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BaseModule.config.json");
+        var configFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, className, configFileName);
 
         if (!File.Exists(configFilePath))
         {
-            if (File.Exists(templateFilePath))
-            {
-                File.Copy(templateFilePath, configFilePath);
-            }
-            else
-            {
-                throw new FileNotFoundException($"Template configuration file '{templateFilePath}' not found.");
-            }
+            throw new FileNotFoundException(
+                $"Configuration file for {className} not found. Looked at {configFilePath}");
         }
 
         var jsonContent = File.ReadAllText(configFilePath);
-        Properties = JsonSerializer.Deserialize<IModule.Properties>(jsonContent);
+        Properties = JsonSerializer.Deserialize<IModule.BaseModuleConfigJson>(jsonContent).Properties;
     }
 }
