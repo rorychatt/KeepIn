@@ -4,7 +4,7 @@ namespace KeepIn.Business.Contracts;
 
 public interface IModule : IIdentifiable
 {
-    public record Properties()
+    public abstract record Properties()
     {
         public required string Name { get; init; }
         public required string Version { get; init; }
@@ -17,6 +17,6 @@ public interface IModule : IIdentifiable
     public record BaseModuleConfigJson()
     {
         [JsonPropertyName("Properties")]
-        public Properties Properties { get; init; }
+        public Properties? Properties { get; init; }
     }
 }

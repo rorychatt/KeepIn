@@ -33,6 +33,6 @@ public class BaseModule : IModule
         }
 
         var jsonContent = File.ReadAllText(configFilePath);
-        Properties = JsonSerializer.Deserialize<IModule.BaseModuleConfigJson>(jsonContent).Properties;
+        Properties = JsonSerializer.Deserialize<IModule.BaseModuleConfigJson>(jsonContent)!.Properties;
     }
 }
