@@ -12,6 +12,17 @@ public class UserRepository : IUserRepository
         {
             Id = "user_default", ActiveModules = new List<IModule>()
             {
+                new InventoryManager(),
+                new InventoryManager(),
+                new InventoryManager(),
+                new InventoryManager(),
+                new InventoryManager(),
+                new InventoryManager(),
+                new InventoryManager(),
+                new InventoryManager(),
+                new InventoryManager(),
+                new InventoryManager(),
+                new InventoryManager(),
                 new InventoryManager()
             }
         }
