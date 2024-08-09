@@ -27,7 +27,7 @@ export default function App() {
 
     useEffect(() => {
         fetchModulesAsync()
-            .then((modules: ServerTypes.Module[]) => setModules(modules))
+            .then((response) => setModules(response.modules))
             .catch((error: Error) => console.error(error));
     }, []);
 
