@@ -6,5 +6,6 @@ public interface IUserRepository
 {
     IEnumerable<User> GetAllUsers();
     User? GetUserById(string id);
+    User? GetUserByName(string name);
     User? AddUser(User user);
 }

@@ -26,6 +26,18 @@ public class UsersController(IUserRepository userRepository) : ControllerBase
 
         return NotFound();
     }
+    
+    [HttpGet("name")]
+    public ActionResult<UserResponse> GetUserByName([FromQuery] string name)
+    {
+        var user = userRepository.GetUserByName(name);
+        if (user is not null)
+        {
+            return Ok(new UserResponse(user.Name, user.ActiveModules));
+        }
+
+        return NotFound();
+    }
 
     [HttpPost]
     public ActionResult<UserResponse> CreateUser(UserRequest userRequest)

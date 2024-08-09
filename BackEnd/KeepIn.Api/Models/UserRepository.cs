@@ -38,6 +38,11 @@ public class UserRepository : IUserRepository
         return _users.GetValueOrDefault(id);
     }
 
+    public User? GetUserByName(string name)
+    {
+        return _users.Values.FirstOrDefault(user => user.Name == name);
+    }
+
     public User? AddUser(User user)
     {
         return !_users.TryAdd(user.Id, user) ? null : user;

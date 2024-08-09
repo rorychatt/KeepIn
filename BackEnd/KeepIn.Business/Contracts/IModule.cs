@@ -4,19 +4,27 @@ namespace KeepIn.Business.Contracts;
 
 public interface IModule : IIdentifiable
 {
-    public abstract record Properties()
+    public ModuleProperties Properties { get; }
+}
+
+public record ModuleProperties()
+{
+    public required string Name { get; init; }
+    public required string Version { get; init; }
+    public string? Description { get; init; }
+    public string? Author { get; init; }
+    public string? License { get; init; }
+    public Dictionary<string, string> Dependencies { get; init; } = new();
+
+    public ModuleProperties(string name, string version) : this()
     {
-        public required string Name { get; init; }
-        public required string Version { get; init; }
-        public string? Description { get; init; }
-        public string? Author { get; init; }
-        public string? License { get; init; }
-        public Dictionary<string, string> Dependencies { get; init; } = new();
-    }
-    
-    public record BaseModuleConfigJson()
-    {
-        [JsonPropertyName("Properties")]
-        public Properties? Properties { get; init; }
+        Name = name;
+        Version = version;
     }
 }
+
+public record BaseModuleConfigJson()
+{
+    [JsonPropertyName("Properties")] public ModuleProperties? Properties { get; init; }
+}
+

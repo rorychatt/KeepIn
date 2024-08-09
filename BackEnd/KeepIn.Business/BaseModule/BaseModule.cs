@@ -6,7 +6,8 @@ namespace KeepIn.Business.BaseModule;
 public class BaseModule : IModule
 {
     public string Id { get; init; } = $"module_{Guid.NewGuid()}";
-    public IModule.Properties? Properties { get; private set; }
+    public ModuleProperties Properties { get; set; } = null!;
+
 
     public BaseModule()
     {
@@ -33,6 +34,8 @@ public class BaseModule : IModule
         }
 
         var jsonContent = File.ReadAllText(configFilePath);
-        Properties = JsonSerializer.Deserialize<IModule.BaseModuleConfigJson>(jsonContent)!.Properties;
+        //Todo: better checks here
+        Properties = JsonSerializer.Deserialize<BaseModuleConfigJson>(jsonContent)!.Properties!;
     }
+    
 }
