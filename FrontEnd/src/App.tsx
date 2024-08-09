@@ -1,23 +1,7 @@
 import './App.css'
+import {useEffect, useState} from "react";
+import module = require("vite");
 
-
-// const Navbar: React.FC = () => {
-//     return (
-//         <nav className="bg-gray-800 p-4 flex justify-between items-center">
-//             <div className="text-white text-lg">My App</div>
-//             <FaCog className="text-white text-2xl cursor-pointer" />
-//         </nav>
-//     );
-// };
-//
-// const Module: React.FC<{ icon: React.ReactNode; name: string }> = ({ icon, name }) => {
-//     return (
-//         <div className="bg-white p-4 rounded shadow hover:bg-gray-100 cursor-pointer flex items-center space-x-2">
-//             <div className="text-2xl">{icon}</div>
-//             <div className="text-lg">{name}</div>
-//         </div>
-//     );
-// };
 function NavBar() {
     return (
         <nav className={"bg-gray-800 p-4 flex justify-between items-center"}>
@@ -37,23 +21,23 @@ function Module() {
 }
 
 export default function App() {
+
+    const [modules, setModules] = useState([]);
+
+    useEffect(() => {
+        fetch("#")
+            .then(response => response.json())
+            .then(data => setModules(data))
+            .catch(error => console.error("Error fetching modules: ", error));
+    }, []);
+
     return (
         <div className={"min-h-screen bg-gray-100"}>
             <NavBar/>
             <article className="p-4 flex flex-wrap justify-center gap-4">
-                <Module/>
-                <Module/>
-                <Module/>
-                <Module/>
-                <Module/>
-                <Module/>
-                <Module/>
-                <Module/>
-                <Module/>
-                <Module/>
-                <Module/>
-                <Module/>
-                <Module/>
+                {
+                    modules.map((module: any) => <Module key={module.id}/>)
+                }
             </article>
         </div>
     )
