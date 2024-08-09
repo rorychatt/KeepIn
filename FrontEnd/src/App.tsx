@@ -29,10 +29,10 @@ function NavBar() {
 
 function Module() {
     return (
-        <div className="border p-4 flex flex-col items-center gap-2">
+        <article className="border p-4 flex flex-col items-center gap-2 shadow-sm hover:shadow-md transition-shadow">
             <img src="https://via.placeholder.com/128" alt="Module Icon" className={""}/>
             <span>Short Name</span>
-        </div>
+        </article>
     );
 }
 
