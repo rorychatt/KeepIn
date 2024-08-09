@@ -15,8 +15,15 @@ public class User(string name) : IUser
 
     private List<IModule> _activeModules = [];
 
-    public void RegisterNewModule(IModule module)
+    public IModule? RegisterNewModule(IModule module)
     {
+        //Todo: this is super fishy... we should not be able to register the same module twice
         _activeModules.Add(module);
+        return module;
+    }
+
+    public IModule? GetModuleByName(string moduleName)
+    {
+        return _activeModules.FirstOrDefault(m => m.Properties.Name == moduleName);
     }
 }
