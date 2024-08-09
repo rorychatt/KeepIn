@@ -25,7 +25,7 @@ export default function App() {
     const [modules, setModules] = useState([]);
 
     useEffect(() => {
-        fetch("#")
+        fetch("http://localhost:5126/")
             .then(response => response.json())
             .then(data => setModules(data))
             .catch(error => console.error("Error fetching modules: ", error));
