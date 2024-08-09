@@ -2,8 +2,6 @@
 using System.Text;
 using FluentAssertions;
 using KeepIn.Api.Models;
-using KeepIn.Business.Users;
-using KeepIn.Modules.InventoryManager;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -52,4 +50,17 @@ public class UsersControllerTests(WebApplicationFactory<Program> factory)
         userResponse?.Name.Should().Be(expectedName);
     }
     
+    [Fact]
+    public async Task Should_Return_User_When_GetByName()
+    {
+        const string expectedName = "gobus1212";
+        await CreateUser(expectedName);
+
+        var getUserResponse = await _client.GetAsync($"{BaseUrl}/name?name={expectedName}");
+
+        var userResponse =
+            JsonConvert.DeserializeObject<UserResponse>(await getUserResponse.Content.ReadAsStringAsync());
+
+        userResponse?.Name.Should().Be(expectedName);
+    }
 }
