@@ -1,9 +1,12 @@
 ﻿import * as ServerTypes from "./ServerTypes.ts";
+import {ServerUserResponse} from "./ServerTypes.ts";
 
-export async function fetchModulesAsync(): Promise<ServerTypes.Module[]>{
+export async function fetchModulesAsync(): Promise<ServerUserResponse>{
     const response = await fetch("http://localhost:5126/");
     if (!response.ok) {
-        throw new Error("Failed to fetch modules");
+        console.warn("Failed to fetch modules");
+        return MOCK_MODULES
+        
     }
     return response.json();
 }
