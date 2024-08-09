@@ -48,4 +48,17 @@ public class UserTests
         foundModule.Should().NotBeNull();
         foundModule.Properties.Name.Should().Be(addedModule.Properties.Name);
     }
+
+    [Fact]
+    public void User_RegisterNewModule_RegistersNewModule()
+    {
+        var user = new User("PetersonV2");
+        
+        var addedModule = user.RegisterNewModule(new InventoryManager())!;
+        
+        user.ActiveModules.Should().Contain(addedModule);
+        
+        addedModule.Properties.Name.Should().Be("InventoryManager");
+        addedModule.Properties.License.Should().Be("MIT");
+    }
 }
