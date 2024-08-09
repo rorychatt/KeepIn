@@ -1,6 +1,7 @@
 import './App.css'
 import {useEffect, useState} from "react";
-import module = require("vite");
+import * as ServerTypes from "./ServerTypes.ts";
+import {fetchModulesAsync} from "./api.ts";
 
 function NavBar() {
     return (
@@ -22,13 +23,12 @@ function Module() {
 
 export default function App() {
 
-    const [modules, setModules] = useState([]);
+    const [modules, setModules] = useState<ServerTypes.Module[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:5126/")
-            .then(response => response.json())
-            .then(data => setModules(data))
-            .catch(error => console.error("Error fetching modules: ", error));
+        fetchModulesAsync()
+            .then((modules: ServerTypes.Module[]) => setModules(modules))
+            .catch((error: Error) => console.error(error));
     }, []);
 
     return (
@@ -36,7 +36,7 @@ export default function App() {
             <NavBar/>
             <article className="p-4 flex flex-wrap justify-center gap-4">
                 {
-                    modules.map((module: any) => <Module key={module.id}/>)
+                    modules.map((module: ServerTypes.Module) => <Module key={module.id}/>)
                 }
             </article>
         </div>
