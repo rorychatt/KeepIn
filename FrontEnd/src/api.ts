@@ -3,7 +3,7 @@ import {ServerUserResponse} from "./ServerTypes.ts";
 
 export async function fetchModulesAsync(): Promise<ServerUserResponse> {
     try {
-        const response = await fetch("http://localhost:5126/");
+        const response = await fetch("http://localhost:5126/api/Users/name?name=John%20Stevenson");
         if (!response.ok) {
             console.warn("Failed to fetch modules");
             return MOCK_SERVER_USER_RESPONSE;
