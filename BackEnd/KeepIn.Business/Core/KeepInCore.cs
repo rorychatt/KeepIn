@@ -4,8 +4,9 @@ namespace KeepIn.Business.Core;
 
 public class KeepInCore : IKeepInCore
 {
-    public Dictionary<string, IModule> ActivatedModules { get; init; }
-    
+    public Dictionary<string, IModule> ActivatedModules { get; init; } = new();
+    private Dictionary<string, ITable<string, string[]>> Tables { get; init; } = new();
+
     public void ActivateModule(IModule module)
     {
         if (!ActivatedModules.TryAdd(module.Properties.Name, module))
@@ -20,5 +21,11 @@ public class KeepInCore : IKeepInCore
         {
             throw new Exception($"Module {module.Properties.Name} not activated");
         }
+    }
+
+    public bool InjectTable(string tableName,
+        ITable<string, string[]> data)
+    {
+        return Tables.TryAdd(tableName, new DynamicTable<string, string[]>(tableName, data.Data));
     }
 }

@@ -8,5 +8,7 @@ public interface IKeepInCore
     
     public void ActivateModule(IModule module);
     public void DeactivateModule(IModule module);
+    public bool InjectTable(string tableName,
+        ITable<string, string[]> data);
     
 }
