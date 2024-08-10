@@ -12,11 +12,12 @@ function NavBar() {
     )
 }
 
-function Module() {
+function Module({module}: { module: ServerTypes.Module }) {
     return (
         <article className="border p-4 flex flex-col items-center gap-2 shadow-sm hover:shadow-md transition-shadow">
-            <img src="https://via.placeholder.com/128" alt="Module Icon" className={""}/>
-            <span>Short Name</span>
+            <img src="/placeholder_128x128.png" alt="Module Icon" className={""}/>
+            <span>{module.properties.name}</span>
+            <span>{module.properties.version}, {module.properties.author}</span>
         </article>
     );
 }
@@ -36,7 +37,7 @@ export default function App() {
             <NavBar/>
             <article className="p-4 flex flex-wrap justify-center gap-4">
                 {
-                    modules.map((module: ServerTypes.Module) => <Module key={module.id}/>)
+                    modules.map((module: ServerTypes.Module) => <Module key={module.id} module={module}/>)
                 }
             </article>
         </div>
