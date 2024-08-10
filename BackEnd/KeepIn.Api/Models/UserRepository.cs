@@ -1,5 +1,7 @@
-﻿using KeepIn.Business.Contracts;
+﻿using KeepIn.Business.BaseModule;
+using KeepIn.Business.Contracts;
 using KeepIn.Business.Users;
+using KeepIn.Modules.Employees;
 using KeepIn.Modules.InventoryManager;
 
 namespace KeepIn.Api.Models;
@@ -13,17 +15,18 @@ public class UserRepository : IUserRepository
             Id = "user_default", ActiveModules = new List<IModule>()
             {
                 new InventoryManager(),
-                new InventoryManager(),
-                new InventoryManager(),
-                new InventoryManager(),
-                new InventoryManager(),
-                new InventoryManager(),
-                new InventoryManager(),
-                new InventoryManager(),
-                new InventoryManager(),
-                new InventoryManager(),
-                new InventoryManager(),
-                new InventoryManager()
+                new EmployeeManager(),
+                new BaseModule(),
+                new BaseModule(),
+                new BaseModule(),
+                new BaseModule(),
+                new BaseModule(),
+                new BaseModule(),
+                new BaseModule(),
+                new BaseModule(),
+                new BaseModule(),
+                new BaseModule(),
+                new BaseModule(),
             }
         }
     };
