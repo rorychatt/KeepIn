@@ -15,7 +15,7 @@ function NavBar() {
 function Module({module}: { module: ServerTypes.Module }) {
     return (
         <article className="border p-4 flex flex-col items-center gap-2 shadow-sm hover:shadow-md transition-shadow">
-            <img src="/placeholder_128x128.png" alt="Module Icon" className={""}/>
+            <img src="/images/placeholder_128x128.png" alt="Module Icon" className={""}/>
             <span>{module.properties.name}</span>
             <span>{module.properties.version}, {module.properties.author}</span>
         </article>
