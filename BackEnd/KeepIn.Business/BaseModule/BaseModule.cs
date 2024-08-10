@@ -6,8 +6,7 @@ namespace KeepIn.Business.BaseModule;
 public class BaseModule : IModule
 {
     public string Id { get; init; } = $"module_{Guid.NewGuid()}";
-    public ModuleProperties Properties { get; set; } = null!;
-
+    public ModuleProperties Properties { get; private set; } = null!;
 
     public BaseModule()
     {
