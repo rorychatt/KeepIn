@@ -10,8 +10,8 @@ function openSettings() {
 function NavBar() {
     return (
         <nav className={"bg-gray-800 p-4 flex justify-between items-center"}>
-            <h2 className="text-white text-lg">KeepIn</h2>
-            <div className="flex items-center cursor-pointer" onClick={openSettings}>
+            <h2 className="text-white text-lg ml-8">KeepIn</h2>
+            <div className="flex items-center cursor-pointer mr-8" onClick={openSettings}>
                 <span className="text-white ml-2 mr-2">Settings</span>
                 <img
                     src="/icons/gear_icon_white.png"
@@ -25,10 +25,10 @@ function NavBar() {
 
 function Module({module}: { module: ServerTypes.Module }) {
     return (
-        <article className="border p-4 flex flex-col items-center gap-2 shadow-sm hover:shadow-md transition-shadow">
+        <article className="border p-4 flex flex-col items-center gap-2 shadow-sm hover:shadow-md transition-shadow w-40">
             <img src="/images/placeholder_128x128.png" alt="Module Icon" className={""}/>
-            <span>{module.properties.name}</span>
-            <span>{module.properties.version}, {module.properties.author}</span>
+            <h2 className={"text-center"}>{module.properties.name}</h2>
+            <h3>{module.properties.version}, {module.properties.author}</h3>
         </article>
     );
 }
