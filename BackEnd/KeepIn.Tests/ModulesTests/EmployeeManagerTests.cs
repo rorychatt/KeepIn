@@ -30,4 +30,13 @@ public class EmployeeManagerTests
         
         employee.Id.Should().NotBeNullOrEmpty();
     }
+
+    [Fact]
+    public void EmployeeManager_ShouldAddEmployee()
+    {
+        var employee = new Employee();
+        var employeeManager = new EmployeeManager();
+
+        employeeManager.AddEmployee(employee).Should().NotBe(false);
+    }
 }
