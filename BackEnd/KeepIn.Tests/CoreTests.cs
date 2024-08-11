@@ -101,4 +101,27 @@ public class CoreTests
         
         isAdded.Should().BeFalse();
     }
+    
+    [Fact]
+    public void Should_AccessTable_AndPutRows()
+    {
+        var core = new KeepInCore();
+        
+        var table = new DynamicTable<string, string[]>("testTable3", new Dictionary<string, string[]>());
+        
+        core.TryInjectTable(table);
+        
+        core.Tables[table.TableName].Should().Be(table);
+        
+        var expectedRows = new Dictionary<string, string[]>
+        {
+            { "row1", ["value1", "value2"] },
+            { "row2", ["value3", "value4"] }
+        };
+        
+        core.Tables[table.TableName].Add("row1", ["value1", "value2"]);
+        core.Tables[table.TableName].Add("row2", ["value3", "value4"]);
+        
+        core.Tables[table.TableName].Data.Should().BeEquivalentTo(expectedRows);
+    }
 }
