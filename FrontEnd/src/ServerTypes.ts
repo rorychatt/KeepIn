@@ -16,3 +16,8 @@ export type ServerUserResponse = {
     name: string;
     modules: Module[];
 }
+
+export type LoginUserResponse = {
+    name: string;
+    accessLevel: string;
+}
