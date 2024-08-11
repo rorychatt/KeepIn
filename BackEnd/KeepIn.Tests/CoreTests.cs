@@ -73,5 +73,15 @@ public class CoreTests
 
         Assert.NotNull(core.Tables);
     }
-    
+
+    [Fact]
+    public void CoreShould_RegisterTable()
+    {
+        var core = new KeepInCore();
+        
+        var table = new DynamicTable<string, string[]>("testTable", new Dictionary<string, string[]>());
+        
+        core.TryInjectTable(table);
+        
+    }
 }

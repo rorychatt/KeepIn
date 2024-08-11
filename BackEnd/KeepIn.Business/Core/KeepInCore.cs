@@ -23,9 +23,8 @@ public class KeepInCore : IKeepInCore
         }
     }
 
-    public bool InjectTable(string tableName,
-        ITable<string, string[]> data)
+    public bool TryInjectTable(ITable<string, string[]> table)
     {
-        return Tables.TryAdd(tableName, new DynamicTable<string, string[]>(tableName, data.Data));
+        return Tables.TryAdd(table.TableName, table);
     }
 }
