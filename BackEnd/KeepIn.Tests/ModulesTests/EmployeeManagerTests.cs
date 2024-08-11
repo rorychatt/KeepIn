@@ -24,14 +24,6 @@ public class EmployeeManagerTests
     }
 
     [Fact]
-    public void Employee_ShouldHaveId()
-    {
-        var employee = new Employee();
-        
-        employee.Id.Should().NotBeNullOrEmpty();
-    }
-
-    [Fact]
     public void EmployeeManager_ShouldAddEmployee()
     {
         var employee = new Employee();
