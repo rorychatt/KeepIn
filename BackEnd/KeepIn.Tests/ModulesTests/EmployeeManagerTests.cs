@@ -59,4 +59,24 @@ public class EmployeeManagerTests
         employeeManager.AddEmployee(employee);
         employeeManager.RemoveEmployee("invalidId").Should().Be(false);
     }
+    
+    [Fact]
+    public void EmployeeManager_ShouldGetEmployee()
+    {
+        var employee = new Employee();
+        var employeeManager = new EmployeeManager();
+        
+        employeeManager.AddEmployee(employee);
+        employeeManager.GetEmployee(employee.Id).Should().Be(employee);
+    }
+    
+    [Fact]
+    public void EmployeeManager_ShouldNotGetWrongEmployee()
+    {
+        var employee = new Employee();
+        var employeeManager = new EmployeeManager();
+        
+        employeeManager.AddEmployee(employee);
+        employeeManager.GetEmployee("invalidId").Should().BeNull();
+    }
 }

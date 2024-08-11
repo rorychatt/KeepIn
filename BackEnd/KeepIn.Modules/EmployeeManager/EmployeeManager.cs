@@ -16,10 +16,10 @@ public class EmployeeManager : BaseModule
         return Employees.Remove(employeeId);
     }
     
-    // public Employee GetEmployee(string employeeId)
-    // {
-    //     return Employees[employeeId];
-    // }
+    public Employee? GetEmployee(string employeeId)
+    {
+        return Employees.GetValueOrDefault(employeeId);
+    }
     //
     // public void UpdateEmployeeRole(string employeeId, Role role)
     // {
