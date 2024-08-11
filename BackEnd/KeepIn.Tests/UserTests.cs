@@ -58,7 +58,7 @@ public class UserTests
         
         user.ActiveModules.Should().Contain(addedModule);
         
-        addedModule.Properties.Name.Should().Be("InventoryManager");
+        addedModule.Properties.Name.Should().Be("Inventory Manager");
         addedModule.Properties.License.Should().Be("MIT");
     }
 }

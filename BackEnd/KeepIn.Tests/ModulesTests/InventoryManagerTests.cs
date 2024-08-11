@@ -10,7 +10,7 @@ public class InventoryManagerTests
     {
         var moduleProperties = new InventoryManager().Properties;
         moduleProperties.Should().NotBeNull();
-        moduleProperties.Name.Should().Be("InventoryManager");
+        moduleProperties.Name.Should().Be("Inventory Manager");
         moduleProperties.Dependencies.Should().NotBeNull();
         moduleProperties.Author.Should().Be("KeepIn");
     }
