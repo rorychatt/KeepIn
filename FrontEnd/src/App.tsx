@@ -1,5 +1,5 @@
 import './App.css'
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import * as ServerTypes from "./ServerTypes.ts";
 import {fetchModulesAsync} from "./api.ts";
 
@@ -34,68 +34,71 @@ function Module({module}: { module: ServerTypes.Module }) {
     );
 }
 
-export default function App() {
-
-    const [modules, setModules] = useState<ServerTypes.Module[]>([]);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+function LoginModal({setIsAuthenticated}: { setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const handleLogin = async () => {
+        try {
+            const response = await fetch('http://localhost:5126/api/Auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({username, password}),
+            });
+
+            if (response.ok) {
+                setIsAuthenticated(true);
+                console.log('Login successful');
+            } else {
+                alert('Login failed');
+            }
+        } catch (error) {
+            console.error('Error logging in:', error);
+        }
+    };
+
+    return (
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+            <div className="bg-white p-8 rounded shadow-md">
+                <h2 className="text-2xl mb-4">Login</h2>
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="mb-4 p-2 border rounded w-full"
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="mb-4 p-2 border rounded w-full"
+                />
+                <button onClick={handleLogin} className="bg-blue-500 text-white p-2 rounded w-full">
+                    Login
+                </button>
+            </div>
+        </div>
+    );
+}
+
+function MainWindow({isAuthenticated}: {
+    isAuthenticated: boolean,
+    setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+}) {
+
+    const [modules, setModules] = useState<ServerTypes.Module[]>([]);
 
     useEffect(() => {
-        if (!isAuthenticated) {
+        if (isAuthenticated) {
             fetchModulesAsync()
                 .then((response) => setModules(response.modules))
                 .catch((error: Error) => console.error(error));
         }
     }, [isAuthenticated]); //TODO: read more about this
-    
-    const handleLogin = async () => {
-        try {
-            const response = await fetch("http://localhost:5126/api/Users/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({username, password})
-            });
-
-            if (response.ok) {
-                setIsAuthenticated(true);
-            } else {
-                alert('Login failed');
-            }
-        } catch (error) {
-            console.error("Error logging in:", error);
-        }
-    }
-    
-    if (!isAuthenticated) {
-        return (
-            <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-                <div className="bg-white p-8 rounded shadow-md">
-                    <h2 className="text-2xl mb-4">Login</h2>
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        className="mb-4 p-2 border rounded w-full"
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="mb-4 p-2 border rounded w-full"
-                    />
-                    <button onClick={handleLogin} className="bg-blue-500 text-white p-2 rounded w-full">
-                        Login
-                    </button>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className={"min-h-screen bg-gray-100"}>
@@ -107,4 +110,18 @@ export default function App() {
             </article>
         </div>
     )
+}
+
+export default function App() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    return (
+        <>
+            {isAuthenticated ? (
+                <MainWindow isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
+            ) : (
+                <LoginModal setIsAuthenticated={setIsAuthenticated}/>
+            )}
+        </>
+    );
 }
