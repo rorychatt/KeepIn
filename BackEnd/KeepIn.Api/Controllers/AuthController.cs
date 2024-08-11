@@ -8,11 +8,11 @@ namespace KeepIn.Api.Controllers;
 public class AuthController : ControllerBase
 {
     [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginRequest request)
+    public ActionResult<LoginResponse> Login([FromBody] LoginRequest request)
     {
         if (request is { Username: "admin", Password: "password" })
         {
-            return Ok();
+            return Ok(new LoginResponse("serverNAME", "serverROLE"));
         }
 
         return Unauthorized();
