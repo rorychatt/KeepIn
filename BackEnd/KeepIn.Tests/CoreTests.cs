@@ -66,4 +66,12 @@ public class CoreTests
         act.Should().Throw<Exception>().WithMessage($"Module {module.Properties.Name} not activated");
     }
     
+    [Fact]
+    public void CoreShould_HaveTables()
+    {
+        var core = new KeepInCore();
+
+        Assert.NotNull(core.Tables);
+    }
+    
 }

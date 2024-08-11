@@ -5,7 +5,7 @@ namespace KeepIn.Business.Core;
 public class KeepInCore : IKeepInCore
 {
     public Dictionary<string, IModule> ActivatedModules { get; init; } = new();
-    private Dictionary<string, ITable<string, string[]>> Tables { get; init; } = new();
+    public Dictionary<string, ITable<string, string[]>> Tables { get; init; } = new();
 
     public void ActivateModule(IModule module)
     {
