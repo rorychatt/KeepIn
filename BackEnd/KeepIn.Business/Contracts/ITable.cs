@@ -1,7 +1,7 @@
 ﻿namespace KeepIn.Business.Contracts;
 
-public interface ITable<T, V>
+public interface ITable<TKey, TValue> where TKey : notnull
 {
-    public Dictionary<T, V> Data { get; init; }
+    public Dictionary<TKey, TValue> Data { get; init; }
     
 }

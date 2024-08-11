@@ -4,4 +4,5 @@ namespace KeepIn.Modules.InventoryManager;
 
 public class InventoryManager : BaseModule
 {
+    
 }

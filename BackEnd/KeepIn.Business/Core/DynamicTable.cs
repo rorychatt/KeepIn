@@ -2,8 +2,8 @@
 
 namespace KeepIn.Business.Core;
 
-public class DynamicTable<T, V>(string tableName, Dictionary<T, V> data) : ITable<T, V>
+public class DynamicTable<TKey, TValue>(string tableName, Dictionary<TKey, TValue> data) : ITable<TKey, TValue> where TKey : notnull
 {
     public string TableName { get; init; } = tableName;
-    public Dictionary<T, V> Data { get; init; } = data;
+    public Dictionary<TKey, TValue> Data { get; init; } = data;
 }
