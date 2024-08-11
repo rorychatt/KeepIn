@@ -5,7 +5,7 @@ namespace KeepIn.Modules.EmployeeManager;
 public class EmployeeManager : BaseModule
 {
     public Dictionary<string, Employee> Employees { get; } = new();
-
+    
     public bool AddEmployee(Employee employee)
     {
         return Employees.TryAdd(employee.Id, employee);
