@@ -22,4 +22,12 @@ public class EmployeeManagerTests
         
         employeeManager.Employees.Should().NotBeNull();
     }
+
+    [Fact]
+    public void Employee_ShouldHaveId()
+    {
+        var employee = new Employee();
+        
+        employee.Id.Should().NotBeNullOrEmpty();
+    }
 }
