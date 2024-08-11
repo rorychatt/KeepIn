@@ -79,4 +79,15 @@ public class EmployeeManagerTests
         employeeManager.AddEmployee(employee);
         employeeManager.GetEmployee("invalidId").Should().BeNull();
     }
+    
+    [Fact]
+    public void EmployeeManager_ShouldUpdateEmployeeRole()
+    {
+        var employee = new Employee();
+        var employeeManager = new EmployeeManager();
+        
+        employeeManager.AddEmployee(employee);
+        employeeManager.UpdateEmployeeRole(employee.Id, Role.Admin);
+        employee.Role.Should().Be(Role.Admin);
+    }
 }

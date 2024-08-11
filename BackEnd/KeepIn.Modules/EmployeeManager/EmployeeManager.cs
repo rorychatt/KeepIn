@@ -20,9 +20,9 @@ public class EmployeeManager : BaseModule
     {
         return Employees.GetValueOrDefault(employeeId);
     }
-    //
-    // public void UpdateEmployeeRole(string employeeId, Role role)
-    // {
-    //     Employees[employeeId].SetRole(role);
-    // }
+    
+    public void UpdateEmployeeRole(string employeeId, Role role)
+    {
+        Employees[employeeId].SetRole(role);
+    }
 }
