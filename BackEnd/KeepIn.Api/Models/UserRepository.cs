@@ -1,7 +1,7 @@
 ﻿using KeepIn.Business.BaseModule;
 using KeepIn.Business.Contracts;
 using KeepIn.Business.Users;
-using KeepIn.Modules.Employees;
+using KeepIn.Modules.EmployeeManager;
 using KeepIn.Modules.InventoryManager;
 
 namespace KeepIn.Api.Models;
