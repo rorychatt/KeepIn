@@ -83,5 +83,22 @@ public class CoreTests
         
         core.TryInjectTable(table);
         
+        core.Tables[table.TableName].Should().Be(table);
+    }
+
+    [Fact]
+    public void CoreShould_NotRegister_TableTwice()
+    {
+        var core = new KeepInCore();
+        
+        var table = new DynamicTable<string, string[]>("testTable2", new Dictionary<string, string[]>());
+        
+        core.TryInjectTable(table);
+        
+        core.Tables[table.TableName].Should().Be(table);
+        
+        var isAdded = core.TryInjectTable(table);
+        
+        isAdded.Should().BeFalse();
     }
 }
