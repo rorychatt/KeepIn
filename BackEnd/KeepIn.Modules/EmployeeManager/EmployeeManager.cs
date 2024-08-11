@@ -10,12 +10,12 @@ public class EmployeeManager : BaseModule
     {
         return Employees.TryAdd(employee.Id, employee);
     }
-
-    // public void RemoveEmployee(string employeeId)
-    // {
-    //     Employees.Remove(employeeId);
-    // }
-    //
+    
+    public bool RemoveEmployee(string employeeId)
+    {
+        return Employees.Remove(employeeId);
+    }
+    
     // public Employee GetEmployee(string employeeId)
     // {
     //     return Employees[employeeId];
