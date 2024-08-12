@@ -6,7 +6,7 @@
     "Author": "KeepIn",
     "License": "MIT",
     "Dependencies": {
-      "BaseModule": "1.0.0"
+      "BaseModule": "1.0.1"
     }
   }
 }
