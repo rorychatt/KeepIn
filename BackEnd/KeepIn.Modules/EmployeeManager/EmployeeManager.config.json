@@ -2,7 +2,7 @@
   "Properties": {
     "Name": "Employee Manager",
     "Version": "1.0.0",
-    "Description": "Base module for KeepIn",
+    "Description": "Part of base modules. Allows to manage employees.",
     "Author": "KeepIn",
     "License": "MIT",
     "Dependencies": {
