@@ -40,15 +40,21 @@ public class EmployeeManager : BaseModule
     {
         return Employees.GetValueOrDefault(employeeId);
     }
-
-    public void UpdateEmployeeRole(string employeeId, Role role)
-    {
-        Employees[employeeId].SetRole(role);
-    }
-
+    
     public List<Employee> GetEmployees()
     {
         return [.. Employees.Values];
     }
-    
+
+    public Employee? UpdateEmployee(string id, Employee employee)
+    {
+        if (!Employees.ContainsKey(id)) return null;
+        Employees[id] = employee;
+        return employee;
+    }
+
+    public bool DeleteEmployee(string id)
+    {
+        return Employees.Remove(id);
+    }
 }

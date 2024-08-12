@@ -14,12 +14,12 @@ public class EmployeeManagerTests
         moduleProperties.Dependencies.Should().NotBeNull();
         moduleProperties.Author.Should().Be("KeepIn");
     }
-    
+
     [Fact]
     public void EmployeeManager_ShouldHaveEmployees()
     {
         var employeeManager = new EmployeeManager();
-        
+
         employeeManager.Employees.Should().NotBeNull();
     }
 
@@ -37,49 +37,49 @@ public class EmployeeManagerTests
     {
         var employee = new Employee();
         var employeeManager = new EmployeeManager();
-        
+
         employeeManager.AddEmployee(employee);
         employeeManager.RemoveEmployee(employee.Id).Should().Be(true);
     }
-    
+
     [Fact]
     public void EmployeeManager_ShouldNotRemoveWrongEmployee()
     {
         var employee = new Employee();
         var employeeManager = new EmployeeManager();
-        
+
         employeeManager.AddEmployee(employee);
         employeeManager.RemoveEmployee("invalidId").Should().Be(false);
     }
-    
+
     [Fact]
     public void EmployeeManager_ShouldGetEmployee()
     {
         var employee = new Employee();
         var employeeManager = new EmployeeManager();
-        
+
         employeeManager.AddEmployee(employee);
         employeeManager.GetEmployeeById(employee.Id).Should().Be(employee);
     }
-    
+
     [Fact]
     public void EmployeeManager_ShouldNotGetWrongEmployee()
     {
         var employee = new Employee();
         var employeeManager = new EmployeeManager();
-        
+
         employeeManager.AddEmployee(employee);
         employeeManager.GetEmployeeById("invalidId").Should().BeNull();
     }
-    
+
     [Fact]
-    public void EmployeeManager_ShouldUpdateEmployeeRole()
+    public void EmployeeManager_ShouldUpdateEmployee()
     {
         var employee = new Employee();
         var employeeManager = new EmployeeManager();
-        
+
         employeeManager.AddEmployee(employee);
-        employeeManager.UpdateEmployeeRole(employee.Id, Role.Admin);
+        employeeManager.UpdateEmployee(employee.Id, new Employee().SetRole(Role.Admin));
         employee.Role.Should().Be(Role.Admin);
     }
 }

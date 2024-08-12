@@ -33,4 +33,34 @@ public class EmployeeManagerController(IKeepInCore keepInCore) : ControllerBase
         return NotFound();
     }
     
+    [HttpPost]
+    public ActionResult<Employee> AddEmployee(Employee employee)
+    {
+        var addedEmployee = EmployeeManagerModule.AddEmployee(employee);
+        return Ok(addedEmployee);
+    }
+    
+    [HttpPut("{id}")]
+    public ActionResult<Employee> UpdateEmployee(string id, Employee employee)
+    {
+        var updatedEmployee = EmployeeManagerModule.UpdateEmployee(id, employee);
+        if (updatedEmployee is not null)
+        {
+            return Ok(updatedEmployee);
+        }
+
+        return NotFound();
+    }
+    
+    [HttpDelete("{id}")]
+    public ActionResult DeleteEmployee(string id)
+    {
+        var deleted = EmployeeManagerModule.DeleteEmployee(id);
+        if (deleted)
+        {
+            return Ok();
+        }
+        return NotFound();
+    }
+    
 }
