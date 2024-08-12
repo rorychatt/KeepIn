@@ -1,4 +1,5 @@
-﻿using KeepIn.Business.Contracts;
+﻿using KeepIn.Api.Models;
+using KeepIn.Business.Contracts;
 using KeepIn.Modules.EmployeeManager;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,14 +33,19 @@ public class EmployeeManagerController(IKeepInCore keepInCore) : ControllerBase
 
         return NotFound();
     }
-    
+
     [HttpPost]
-    public ActionResult<Employee> AddEmployee(Employee employee)
+    public ActionResult<Employee> AddEmployee([FromBody] AddEmployeeRequest addEmployeeRequest)
     {
+        var employee = (Employee)addEmployeeRequest;
         var addedEmployee = EmployeeManagerModule.AddEmployee(employee);
-        return Ok(addedEmployee);
+        if (addedEmployee)
+        {
+            return CreatedAtAction(nameof(GetEmployeeById), new { id = employee.Id }, employee);
+        }
+        return Conflict("Employee could not be added due to a conflict.");
     }
-    
+
     [HttpPut("{id}")]
     public ActionResult<Employee> UpdateEmployee(string id, Employee employee)
     {
@@ -51,7 +57,7 @@ public class EmployeeManagerController(IKeepInCore keepInCore) : ControllerBase
 
         return NotFound();
     }
-    
+
     [HttpDelete("{id}")]
     public ActionResult DeleteEmployee(string id)
     {
@@ -60,7 +66,7 @@ public class EmployeeManagerController(IKeepInCore keepInCore) : ControllerBase
         {
             return Ok();
         }
+
         return NotFound();
     }
-    
 }

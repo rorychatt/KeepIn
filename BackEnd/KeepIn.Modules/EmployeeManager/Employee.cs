@@ -5,11 +5,11 @@ namespace KeepIn.Modules.EmployeeManager;
 public class Employee : IIdentifiable
 {
     public string Id { get; init; } = $"employee_{Guid.NewGuid()}";
-    public string? Name { get; private set; }
-    public string? Email { get; private set; }
-    public string? PhoneNumber { get; private set; }
-    public string? Address { get; private set; }
-    public Role? Role { get; private set; } = Modules.EmployeeManager.Role.Guest;
+    public string? Name { get; set; }
+    public string? Email { get; set; }
+    public string? PhoneNumber { get; set; }
+    public string? Address { get; set; }
+    public Role? Role { get; set; } = Modules.EmployeeManager.Role.Guest;
     
     public Employee SetName(string name)
     {
@@ -40,5 +40,7 @@ public class Employee : IIdentifiable
         Role = role;
         return this;
     }
+    
+    
     
 }
