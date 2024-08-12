@@ -1,4 +1,4 @@
-﻿import {Employee, ServerEmployeesResponse, ServerUserResponse} from "./ServerTypes.ts";
+﻿import {AddEmployeeRequest, Employee, ServerEmployeesResponse, ServerUserResponse} from "./ServerTypes.ts";
 
 export async function fetchModulesAsync(): Promise<ServerUserResponse> {
     try {
@@ -29,12 +29,19 @@ export async function fetchEmployeesAsync(): Promise<ServerEmployeesResponse> {
 }
 
 export async function addEmployeeAsync(employee: Employee): Promise<Employee> {
+    const addEmployeeRequest: AddEmployeeRequest = {
+        Name: employee.name,
+        Email: employee.email,
+        PhoneNumber: employee.phoneNumber,
+        Address: employee.address,
+        Role: employee.role
+    }
     const response = await fetch('http://localhost:5126/api/Employees', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(employee),
+        body: JSON.stringify(addEmployeeRequest),
     });
     if (!response.ok) {
         throw new Error('Failed to add employee');

@@ -23,6 +23,14 @@ export type Employee = {
     role: RoleEnum;
 }
 
+export type AddEmployeeRequest = {
+    Name: string;
+    Email: string;
+    PhoneNumber: string;
+    Address: string;
+    Role: RoleEnum;
+}
+
 export type ServerUserResponse = {
     name: string;
     modules: Module[];
