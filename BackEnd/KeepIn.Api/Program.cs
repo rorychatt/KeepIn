@@ -1,4 +1,5 @@
 using KeepIn.Api.Models;
+using KeepIn.Business.Contracts;
 using KeepIn.Business.Core;
 
 var builder = WebApplication.CreateBuilder(args);
