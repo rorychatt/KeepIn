@@ -1,6 +1,6 @@
 ﻿
 import {Module, Employee, RoleEnum} from "../../ServerTypes.ts";
-import { fetchEmployeesAsync } from "../../api.ts";
+import {addEmployeeAsync, fetchEmployeesAsync, updateEmployeeAsync} from "../../api.ts";
 import React, {useEffect, useState} from "react";
 
 function EmployeesTable() {
@@ -13,6 +13,7 @@ function EmployeesTable() {
         address: '',
         role: RoleEnum.Guest,
     });
+    const [isEditing, setIsEditing] = useState<boolean>(false);
 
     useEffect(() => {
         fetchEmployeesAsync()
@@ -28,19 +29,46 @@ function EmployeesTable() {
         }));
     };
 
-    const handleAddEmployee = () => {
-        setEmployees(prevEmployees => [
-            ...prevEmployees,
-            { ...newEmployee, id: (prevEmployees.length + 1).toString() },
-        ]);
-        setNewEmployee({
-            id: '',
-            name: '',
-            email: '',
-            phoneNumber: '',
-            address: '',
-            role: RoleEnum.Guest,
-        });
+    const handleAddEmployee = async () => {
+        try {
+            const addedEmployee = await addEmployeeAsync(newEmployee);
+            setEmployees(prevEmployees => [...prevEmployees, addedEmployee]);
+            setNewEmployee({
+                id: '',
+                name: '',
+                email: '',
+                phoneNumber: '',
+                address: '',
+                role: RoleEnum.Guest,
+            });
+        } catch (error) {
+            console.error('Error adding employee:', error);
+        }
+    };
+
+    const handleEditEmployee = (employee: Employee) => {
+        setNewEmployee(employee);
+        setIsEditing(true);
+    };
+
+    const handleUpdateEmployee = async () => {
+        try {
+            const updatedEmployee = await updateEmployeeAsync(newEmployee);
+            setEmployees(prevEmployees =>
+                prevEmployees.map(emp => (emp.id === updatedEmployee.id ? updatedEmployee : emp))
+            );
+            setNewEmployee({
+                id: '',
+                name: '',
+                email: '',
+                phoneNumber: '',
+                address: '',
+                role: RoleEnum.Guest,
+            });
+            setIsEditing(false);
+        } catch (error) {
+            console.error('Error updating employee:', error);
+        }
     };
 
     return (
@@ -53,6 +81,7 @@ function EmployeesTable() {
                     <th className="py-2 px-4 text-left">Phone Number</th>
                     <th className="py-2 px-4 text-left">Address</th>
                     <th className="py-2 px-4 text-left">Role</th>
+                    <th className="py-2 px-4 text-left">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -63,12 +92,17 @@ function EmployeesTable() {
                         <td className="py-2 px-4">{employee.phoneNumber}</td>
                         <td className="py-2 px-4">{employee.address}</td>
                         <td className="py-2 px-4">{RoleEnum[employee.role]}</td>
+                        <td className="py-2 px-4">
+                            <button onClick={() => handleEditEmployee(employee)} className="bg-yellow-500 text-white p-1 rounded">
+                                Edit
+                            </button>
+                        </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
             <div className="mt-4">
-                <h3 className="text-xl mb-2">Add New Employee</h3>
+                <h3 className="text-xl mb-2">{isEditing ? "Edit Employee" : "Add New Employee"}</h3>
                 <input
                     type="text"
                     name="name"
@@ -115,8 +149,11 @@ function EmployeesTable() {
                             </option>
                         ))}
                 </select>
-                <button onClick={handleAddEmployee} className="bg-blue-500 text-white p-2 rounded w-full">
-                    Add Employee
+                <button
+                    onClick={isEditing ? handleUpdateEmployee : handleAddEmployee}
+                    className="bg-blue-500 text-white p-2 rounded w-full"
+                >
+                    {isEditing ? "Update Employee" : "Add Employee"}
                 </button>
             </div>
         </div>

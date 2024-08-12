@@ -1,4 +1,4 @@
-﻿import {ServerEmployeesResponse, ServerUserResponse} from "./ServerTypes.ts";
+﻿import {Employee, ServerEmployeesResponse, ServerUserResponse} from "./ServerTypes.ts";
 
 export async function fetchModulesAsync(): Promise<ServerUserResponse> {
     try {
@@ -26,6 +26,34 @@ export async function fetchEmployeesAsync(): Promise<ServerEmployeesResponse> {
         console.error("Error fetching employees:", error);
         return MOCK_SERVER_EMPLOYEES_RESPONSE;
     }
+}
+
+export async function addEmployeeAsync(employee: Employee): Promise<Employee> {
+    const response = await fetch('http://localhost:5126/api/Employees', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(employee),
+    });
+    if (!response.ok) {
+        throw new Error('Failed to add employee');
+    }
+    return response.json();
+}
+
+export async function updateEmployeeAsync(employee: Employee): Promise<Employee> {
+    const response = await fetch(`http://localhost:5126/api/Employees/${employee.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(employee),
+    });
+    if (!response.ok) {
+        throw new Error('Failed to update employee');
+    }
+    return response.json();
 }
 
 export const MOCK_SERVER_EMPLOYEES_RESPONSE: ServerEmployeesResponse = [
