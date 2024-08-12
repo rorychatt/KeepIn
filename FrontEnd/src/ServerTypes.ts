@@ -20,7 +20,7 @@ export type Employee = {
     email: string;
     phoneNumber: string;
     address: string;
-    role: Role;
+    role: RoleEnum;
 }
 
 export type ServerUserResponse = {
@@ -33,7 +33,7 @@ export type LoginUserResponse = {
     accessLevel: string;
 }
 
-export enum Role {
+export enum RoleEnum {
     Guest,
     Worker,
     Manager,

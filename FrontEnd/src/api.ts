@@ -14,6 +14,20 @@ export async function fetchModulesAsync(): Promise<ServerUserResponse> {
     }
 }
 
+export async function fetchEmployeesAsync(): Promise<ServerEmployeesResponse> {
+    try {
+        const response = await fetch("http://localhost:5126/api/Employees");
+        if (!response.ok) {
+            console.warn("Failed to fetch employees");
+            return MOCK_SERVER_EMPLOYEES_RESPONSE;
+        }
+        return response.json();
+    } catch (error) {
+        console.error("Error fetching employees:", error);
+        return MOCK_SERVER_EMPLOYEES_RESPONSE;
+    }
+}
+
 export const MOCK_SERVER_EMPLOYEES_RESPONSE: ServerEmployeesResponse = [
     {
         "id": "employee_e5fff2f8-4969-4bb0-8012-ea85202c0bca",

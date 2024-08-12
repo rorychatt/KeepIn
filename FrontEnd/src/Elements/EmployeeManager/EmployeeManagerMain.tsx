@@ -1,27 +1,43 @@
-﻿import {Module} from "../../ServerTypes.ts";
-
+﻿
+import {Module, Employee, RoleEnum} from "../../ServerTypes.ts";
+import { fetchEmployeesAsync } from "../../api.ts";
+import {useEffect, useState} from "react";
 
 function EmployeesTable() {
-    return <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-            <th>Address</th>
-            <th>Role</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>The best dude ever</td>
-            <td>test@gmail.com</td>
-            <td>07612311</td>
-            <td>None of your business</td>
-            <td>1</td>
-        </tr>
-        </tbody>
-    </table>
+    const [employees, setEmployees] = useState<Employee[]>([]);
+
+    useEffect(() => {
+        fetchEmployeesAsync()
+            .then(setEmployees)
+            .catch(error => console.error('Error fetching employees:', error));
+    }, []);
+
+    return (
+        <div className="overflow-x-auto">
+            <table className="min-w-full bg-white border border-gray-200">
+                <thead>
+                <tr className="bg-gray-100 border-b">
+                    <th className="py-2 px-4 text-left">Name</th>
+                    <th className="py-2 px-4 text-left">Email</th>
+                    <th className="py-2 px-4 text-left">Phone Number</th>
+                    <th className="py-2 px-4 text-left">Address</th>
+                    <th className="py-2 px-4 text-left">Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                {employees.map(employee => (
+                    <tr key={employee.id} className="border-b hover:bg-gray-50">
+                        <td className="py-2 px-4">{employee.name}</td>
+                        <td className="py-2 px-4">{employee.email}</td>
+                        <td className="py-2 px-4">{employee.phoneNumber}</td>
+                        <td className="py-2 px-4">{employee.address}</td>
+                        <td className="py-2 px-4">{RoleEnum[employee.role]}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        </div>
+    );
 }
 
 const EmployeeManagerMain = ({module}: { module: Module }) => {
