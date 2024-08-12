@@ -20,5 +20,17 @@ public class EmployeeManagerController(IKeepInCore keepInCore) : ControllerBase
         var employees = EmployeeManagerModule.GetEmployees();
         return Ok(employees);
     }
+
+    [HttpGet("{id}")]
+    public ActionResult<Employee> GetEmployeeById(string id)
+    {
+        var employee = EmployeeManagerModule.GetEmployeeById(id);
+        if (employee is not null)
+        {
+            return Ok(employee);
+        }
+
+        return NotFound();
+    }
     
 }

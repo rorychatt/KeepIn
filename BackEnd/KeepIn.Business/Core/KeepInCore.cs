@@ -9,11 +9,10 @@ public class KeepInCore : IKeepInCore
 
     public void ActivateModule(IModule module)
     {
-        if (!ActivatedModules.TryAdd(module.Properties.Name, module))
-        {
-            //TODO: better handling here
-            Console.WriteLine($"Module {module.Properties.Name} already activated");
-        }
+        //TODO: better handling here
+        Console.WriteLine(!ActivatedModules.TryAdd(module.Properties.Name, module)
+            ? $"Module {module.Properties.Name} already activated"
+            : $"Module {module.Properties.Name} activated");
     }
 
     public void DeactivateModule(IModule module)
@@ -21,6 +20,10 @@ public class KeepInCore : IKeepInCore
         if (!ActivatedModules.Remove(module.Properties.Name))
         {
             throw new Exception($"Module {module.Properties.Name} not activated");
+        }
+        else
+        {
+            Console.WriteLine($"Module {module.Properties.Name} deactivated");;
         }
     }
 

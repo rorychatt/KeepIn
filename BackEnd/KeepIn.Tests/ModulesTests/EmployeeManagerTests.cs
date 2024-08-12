@@ -59,7 +59,7 @@ public class EmployeeManagerTests
         var employeeManager = new EmployeeManager();
         
         employeeManager.AddEmployee(employee);
-        employeeManager.GetEmployee(employee.Id).Should().Be(employee);
+        employeeManager.GetEmployeeById(employee.Id).Should().Be(employee);
     }
     
     [Fact]
@@ -69,7 +69,7 @@ public class EmployeeManagerTests
         var employeeManager = new EmployeeManager();
         
         employeeManager.AddEmployee(employee);
-        employeeManager.GetEmployee("invalidId").Should().BeNull();
+        employeeManager.GetEmployeeById("invalidId").Should().BeNull();
     }
     
     [Fact]

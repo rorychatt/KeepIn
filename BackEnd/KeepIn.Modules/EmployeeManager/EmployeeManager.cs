@@ -4,7 +4,27 @@ namespace KeepIn.Modules.EmployeeManager;
 
 public class EmployeeManager : BaseModule
 {
-    public Dictionary<string, Employee> Employees { get; } = new();
+    public Dictionary<string, Employee> Employees { get; } = [];
+
+    public EmployeeManager()
+    {
+        var carlEmployee = new Employee()
+            .SetName("The best dude ever")
+            .SetEmail("carl@gigachad.com")
+            .SetAddress("None of your business")
+            .SetPhoneNumber("07612311")
+            .SetRole(Role.Admin);
+
+        var johnEmployee = new Employee()
+            .SetName("John Doe")
+            .SetEmail("skip@mondays.com")
+            .SetAddress("1234 Main St, City, Country")
+            .SetPhoneNumber("1234567890")
+            .SetRole(Role.Worker);
+        
+        AddEmployee(carlEmployee);
+        AddEmployee(johnEmployee);
+    }
 
     public bool AddEmployee(Employee employee)
     {
@@ -16,7 +36,7 @@ public class EmployeeManager : BaseModule
         return Employees.Remove(employeeId);
     }
 
-    public Employee? GetEmployee(string employeeId)
+    public Employee? GetEmployeeById(string employeeId)
     {
         return Employees.GetValueOrDefault(employeeId);
     }
@@ -28,6 +48,7 @@ public class EmployeeManager : BaseModule
 
     public List<Employee> GetEmployees()
     {
-        return Employees.Values.ToList();
+        return [.. Employees.Values];
     }
+    
 }

@@ -2,7 +2,7 @@
 
 namespace KeepIn.Api.Models;
 
-public interface IUserRepository
+public interface IUsersRepository
 {
     IEnumerable<User> GetAllUsers();
     User? GetUserById(string id);

@@ -6,18 +6,18 @@ using KeepIn.Modules.InventoryManager;
 
 namespace KeepIn.Api.Models;
 
-public class UsersRepository() : IUserRepository
+public class UsersRepository : IUsersRepository
 {
-    private readonly Dictionary<string, User> _users = new();
-    private readonly IKeepInCore _keepInCore = null!;
-    
-    public UsersRepository(IKeepInCore keepInCore) : this()
+    private readonly Dictionary<string, User> _users = [];
+    private readonly IKeepInCore _keepInCore;
+
+    public UsersRepository(IKeepInCore keepInCore)
     {
         _keepInCore = keepInCore;
         var newUser = new User("John Stevenson")
         {
-            Id = "user_default", ActiveModules = new List<IModule>()
-            {
+            Id = "user_default", ActiveModules =
+            [
                 new InventoryManager(),
                 new EmployeeManager(),
                 new BaseModule(),
@@ -31,11 +31,11 @@ public class UsersRepository() : IUserRepository
                 new BaseModule(),
                 new BaseModule(),
                 new BaseModule(),
-            }
+            ]
         };
         AddUser(newUser);
     }
-    
+
 
     public IEnumerable<User> GetAllUsers()
     {
@@ -54,10 +54,17 @@ public class UsersRepository() : IUserRepository
 
     public User? AddUser(User user)
     {
-        foreach (var module in user.ActiveModules)
+        if (!_users.TryAdd(user.Id, user))
+        {
+            return null;
+        }
+
+        foreach (var module in user.ActiveModules.ToList()
+                     .Where(module => !_keepInCore.ActivatedModules.TryGetValue(module.Properties.Name, out _)))
         {
             _keepInCore.ActivateModule(module);
         }
-        return !_users.TryAdd(user.Id, user) ? null : user;
+
+        return user;
     }
 }
