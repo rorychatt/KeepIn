@@ -21,10 +21,10 @@ public class KeepInCore : IKeepInCore
         {
             throw new Exception($"Module {module.Properties.Name} not activated");
         }
-        else
-        {
-            Console.WriteLine($"Module {module.Properties.Name} deactivated");;
-        }
+        // else
+        // {
+        //     Console.WriteLine($"Module {module.Properties.Name} deactivated");;
+        // }
     }
 
     public bool TryInjectTable(ITable<string, string[]> table)
