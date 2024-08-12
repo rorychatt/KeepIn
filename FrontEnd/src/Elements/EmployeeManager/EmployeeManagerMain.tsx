@@ -25,7 +25,7 @@ function EmployeesTable() {
         const { name, value } = e.target;
         setNewEmployee(prevState => ({
             ...prevState,
-            [name]: value,
+            [name]: name === 'role' ? parseInt(value, 10) : value,
         }));
     };
 
@@ -61,6 +61,10 @@ function EmployeesTable() {
     const handleUpdateEmployee = async () => {
         try {
             const updatedEmployee = await updateEmployeeAsync(newEmployee);
+            
+            console.log(updatedEmployee)
+            console.log(employees)
+            
             setEmployees(prevEmployees =>
                 prevEmployees.map(emp => (emp.id === updatedEmployee.id ? updatedEmployee : emp))
             );
@@ -180,16 +184,19 @@ function EmployeesTable() {
         </article>
     );
 }
+
 const EmployeeManagerMain = ({module}: { module: Module }) => {
-    return <div>
-        <h2 className="text-2xl font-bold mb-4">{module.properties.name}</h2>
-        <EmployeesTable/>
-        <footer className="mt-4 p-4 bg-gray-100 border-t">
-            <p>{module.properties.description}</p>
-            <p>License: {module.properties.license}</p>
-            <p>Version: {module.properties.version}</p>
-        </footer>
-    </div>
+    return (
+        <div>
+            <h2 className="text-2xl font-bold mb-4">{module.properties.name}</h2>
+            <EmployeesTable/>
+            <footer className="mt-4 p-4 bg-gray-100 border-t">
+                <p>{module.properties.description}</p>
+                <p>License: {module.properties.license}</p>
+                <p>Version: {module.properties.version}</p>
+            </footer>
+        </div>
+    );
 }
 
 export default EmployeeManagerMain

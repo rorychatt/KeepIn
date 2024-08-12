@@ -2,15 +2,15 @@
 
 namespace KeepIn.Modules.EmployeeManager;
 
-public class Employee : IIdentifiable
+public class Employee(string? id = null) : IIdentifiable
 {
-    public string Id { get; init; } = $"employee_{Guid.NewGuid()}";
+    public string Id { get; init; } = id ?? $"employee_{Guid.NewGuid()}";
     public string? Name { get; set; }
     public string? Email { get; set; }
     public string? PhoneNumber { get; set; }
     public string? Address { get; set; }
     public Role? Role { get; set; } = Modules.EmployeeManager.Role.Guest;
-    
+
     public Employee SetName(string name)
     {
         Name = name;
@@ -40,7 +40,5 @@ public class Employee : IIdentifiable
         Role = role;
         return this;
     }
-    
-    
     
 }

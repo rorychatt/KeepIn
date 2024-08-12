@@ -46,6 +46,9 @@ export async function addEmployeeAsync(addEmployeeRequest: AddEmployeeRequest): 
 }
 
 export async function updateEmployeeAsync(employee: Employee): Promise<Employee> {
+    
+    console.log(employee);
+    
     const response = await fetch(`http://localhost:5126/api/EmployeeManager/${employee.id}`, {
         method: 'PUT',
         headers: {

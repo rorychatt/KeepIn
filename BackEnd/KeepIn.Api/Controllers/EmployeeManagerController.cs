@@ -46,8 +46,9 @@ public class EmployeeManagerController(IKeepInCore keepInCore) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Employee> UpdateEmployee(string id, Employee employee)
+    public ActionResult<Employee> UpdateEmployee(string id, [FromBody] UpdateEmployeeRequest updateEmployeeRequest)
     {
+        var employee = (Employee)updateEmployeeRequest;
         var updatedEmployee = EmployeeManagerModule.UpdateEmployee(id, employee);
         if (updatedEmployee is not null)
         {
