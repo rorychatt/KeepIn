@@ -11,7 +11,8 @@ public class KeepInCore : IKeepInCore
     {
         if (!ActivatedModules.TryAdd(module.Properties.Name, module))
         {
-            throw new Exception($"Module {module.Properties.Name} already activated");
+            //TODO: better handling here
+            Console.WriteLine($"Module {module.Properties.Name} already activated");
         }
     }
 

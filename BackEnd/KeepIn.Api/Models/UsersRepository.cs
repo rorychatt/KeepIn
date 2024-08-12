@@ -6,11 +6,15 @@ using KeepIn.Modules.InventoryManager;
 
 namespace KeepIn.Api.Models;
 
-public class UserRepository : IUserRepository
+public class UsersRepository() : IUserRepository
 {
-    private readonly Dictionary<string, User> _users = new()
+    private readonly Dictionary<string, User> _users = new();
+    private readonly IKeepInCore _keepInCore = null!;
+    
+    public UsersRepository(IKeepInCore keepInCore) : this()
     {
-        ["user_default"] = new User("John Stevenson")
+        _keepInCore = keepInCore;
+        var newUser = new User("John Stevenson")
         {
             Id = "user_default", ActiveModules = new List<IModule>()
             {
@@ -28,8 +32,10 @@ public class UserRepository : IUserRepository
                 new BaseModule(),
                 new BaseModule(),
             }
-        }
-    };
+        };
+        AddUser(newUser);
+    }
+    
 
     public IEnumerable<User> GetAllUsers()
     {
@@ -48,6 +54,10 @@ public class UserRepository : IUserRepository
 
     public User? AddUser(User user)
     {
+        foreach (var module in user.ActiveModules)
+        {
+            _keepInCore.ActivateModule(module);
+        }
         return !_users.TryAdd(user.Id, user) ? null : user;
     }
 }
