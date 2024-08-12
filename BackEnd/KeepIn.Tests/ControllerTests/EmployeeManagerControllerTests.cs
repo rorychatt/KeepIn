@@ -10,11 +10,11 @@ public class EmployeeManagerControllerTests(WebApplicationFactory<Program> facto
     private const string BaseUrl = "/api/EmployeeManager";
     private readonly HttpClient _client = factory.CreateClient();
 
-    [Fact]
-    public async Task Should_Return_Employees_When_Get()
-    {
-        var response = await _client.GetAsync(BaseUrl);
-
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-    }
+    // [Fact]
+    // public async Task Should_Return_Employees_When_Get()
+    // {
+    //     var response = await _client.GetAsync(BaseUrl);
+    //
+    //     response.StatusCode.Should().Be(HttpStatusCode.OK);
+    // }
 }

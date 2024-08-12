@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using KeepIn.Modules.EmployeeManager;
 
-namespace KeepIn.Tests;
+namespace KeepIn.Tests.ModulesTests;
 
 public class EmployeeManagerTests
 {
