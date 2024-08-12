@@ -17,7 +17,6 @@ public class EmployeeManagerController(IKeepInCore keepInCore) : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<Employee>> GetEmployees()
     {
-        Console.WriteLine(keepInCore.ActivatedModules.Keys);
         var employees = EmployeeManagerModule.GetEmployees();
         return Ok(employees);
     }
