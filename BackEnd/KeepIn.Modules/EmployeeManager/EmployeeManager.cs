@@ -13,14 +13,14 @@ public class EmployeeManager : BaseModule
             .SetEmail("carl@gigachad.com")
             .SetAddress("None of your business")
             .SetPhoneNumber("07612311")
-            .SetRole(Role.Admin);
+            .SetRole(Role.Worker);
 
         var johnEmployee = new Employee()
-            .SetName("John Doe")
+            .SetName("John Stevenson")
             .SetEmail("skip@mondays.com")
             .SetAddress("1234 Main St, City, Country")
             .SetPhoneNumber("1234567890")
-            .SetRole(Role.Worker);
+            .SetRole(Role.Admin);
         
         AddEmployee(carlEmployee);
         AddEmployee(johnEmployee);

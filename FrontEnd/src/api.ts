@@ -1,4 +1,4 @@
-﻿import {ServerUserResponse} from "./ServerTypes.ts";
+﻿import {ServerEmployeesResponse, ServerUserResponse} from "./ServerTypes.ts";
 
 export async function fetchModulesAsync(): Promise<ServerUserResponse> {
     try {
@@ -13,6 +13,25 @@ export async function fetchModulesAsync(): Promise<ServerUserResponse> {
         return MOCK_SERVER_USER_RESPONSE;
     }
 }
+
+export const MOCK_SERVER_EMPLOYEES_RESPONSE: ServerEmployeesResponse = [
+    {
+        "id": "employee_e5fff2f8-4969-4bb0-8012-ea85202c0bca",
+        "name": "The best dude ever",
+        "email": "carl@gigachad.com",
+        "phoneNumber": "07612311",
+        "address": "None of your business",
+        "role": 1
+    },
+    {
+        "id": "employee_55dd98de-82fc-4ac6-bdd4-7033975da514",
+        "name": "John Stevenson",
+        "email": "skip@mondays.com",
+        "phoneNumber": "1234567890",
+        "address": "1234 Main St, City, Country",
+        "role": 3
+    }
+]
 
 export const MOCK_SERVER_USER_RESPONSE: ServerUserResponse = {
     "name": "John Stevenson",
