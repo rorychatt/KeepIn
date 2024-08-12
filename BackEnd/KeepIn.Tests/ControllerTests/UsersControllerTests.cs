@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace KeepIn.Tests;
+namespace KeepIn.Tests.ControllerTests;
 
 public class UsersControllerTests(WebApplicationFactory<Program> factory)
     : IClassFixture<WebApplicationFactory<Program>>
@@ -43,6 +43,20 @@ public class UsersControllerTests(WebApplicationFactory<Program> factory)
         var userResponseRouteValue = createUserResponse.Headers.Location?.ToString().Split('/').Last();
 
         var getUserResponse = await _client.GetAsync($"{BaseUrl}/{userResponseRouteValue}");
+
+        var userResponse =
+            JsonConvert.DeserializeObject<UserResponse>(await getUserResponse.Content.ReadAsStringAsync());
+
+        userResponse?.Name.Should().Be(expectedName);
+    }
+    
+    [Fact]
+    public async Task Should_Return_User_When_GetByName()
+    {
+        const string expectedName = "gobus1212";
+        await CreateUser(expectedName);
+
+        var getUserResponse = await _client.GetAsync($"{BaseUrl}/name?name={expectedName}");
 
         var userResponse =
             JsonConvert.DeserializeObject<UserResponse>(await getUserResponse.Content.ReadAsStringAsync());

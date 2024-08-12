@@ -1,4 +1,6 @@
 using KeepIn.Api.Models;
+using KeepIn.Business.Contracts;
+using KeepIn.Business.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,22 +8,26 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<IKeepInCore, KeepInCore>();
+builder.Services.AddSingleton<IUsersRepository, UsersRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add CORS services
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
+    options.AddPolicy("AllowAll", corsPolicyBuilder =>
     {
-        builder.AllowAnyOrigin()
+        corsPolicyBuilder.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
 });
 
 var app = builder.Build();
+
+app.Services.GetRequiredService<IKeepInCore>();
+app.Services.GetRequiredService<IUsersRepository>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

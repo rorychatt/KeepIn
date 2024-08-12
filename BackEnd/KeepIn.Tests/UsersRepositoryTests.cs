@@ -1,14 +1,15 @@
 ﻿using KeepIn.Api.Models;
+using KeepIn.Business.Core;
 using KeepIn.Business.Users;
 
 namespace KeepIn.Tests;
 
-public class UserRepositoryTests
+public class UsersRepositoryTests
 {
     [Fact]
     public void UserRepositoryShould_HaveGetAllUsersMethod()
     {
-        var userRepository = new UserRepository();
+        var userRepository = new UsersRepository(new KeepInCore());
 
         Assert.NotNull(userRepository.GetAllUsers());
     }
@@ -16,7 +17,7 @@ public class UserRepositoryTests
     [Fact]
     public void UserRepositoryShould_ReturnNullForNonExistingUser()
     {
-        var userRepository = new UserRepository();
+        var userRepository = new UsersRepository(new KeepInCore());
 
         Assert.Null(userRepository.GetUserById("blob"));
     }
@@ -24,7 +25,7 @@ public class UserRepositoryTests
     [Fact]
     public void UserRepositoryShould_CreateUser()
     {
-        var userRepository = new UserRepository();
+        var userRepository = new UsersRepository(new KeepInCore());
         var user = new User("Bo1231");
 
         Assert.NotNull(userRepository.AddUser(user));
@@ -33,7 +34,7 @@ public class UserRepositoryTests
     [Fact]
     public void UserRepositoryShould_ReturnUserById()
     {
-        var userRepository = new UserRepository();
+        var userRepository = new UsersRepository(new KeepInCore());
         var user = new User("Ba12312");
         var createdUser = userRepository.AddUser(user);
 
@@ -43,7 +44,7 @@ public class UserRepositoryTests
     [Fact]
     public void UserRepositoryShould_NotAddUserWithExistingId()
     {
-        var userRepository = new UserRepository();
+        var userRepository = new UsersRepository(new KeepInCore());
         var user = new User("kent1231");
         userRepository.AddUser(user);
 
