@@ -16,7 +16,7 @@ export async function fetchModulesAsync(): Promise<ServerUserResponse> {
 
 export async function fetchEmployeesAsync(): Promise<ServerEmployeesResponse> {
     try {
-        const response = await fetch("http://localhost:5126/api/Employees");
+        const response = await fetch("http://localhost:5126/api/EmployeeManager");
         if (!response.ok) {
             console.warn("Failed to fetch employees");
             return MOCK_SERVER_EMPLOYEES_RESPONSE;
@@ -36,7 +36,7 @@ export async function addEmployeeAsync(employee: Employee): Promise<Employee> {
         Address: employee.address,
         Role: employee.role
     }
-    const response = await fetch('http://localhost:5126/api/Employees', {
+    const response = await fetch('http://localhost:5126/api/EmployeeManager', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export async function addEmployeeAsync(employee: Employee): Promise<Employee> {
 }
 
 export async function updateEmployeeAsync(employee: Employee): Promise<Employee> {
-    const response = await fetch(`http://localhost:5126/api/Employees/${employee.id}`, {
+    const response = await fetch(`http://localhost:5126/api/EmployeeManager/${employee.id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export async function updateEmployeeAsync(employee: Employee): Promise<Employee>
 }
 
 export async function deleteEmployeeAsync(employeeId: string): Promise<void> {
-    const response = await fetch(`http://localhost:5126/api/Employees/${employeeId}`, {
+    const response = await fetch(`http://localhost:5126/api/EmployeeManager/${employeeId}`, {
         method: 'DELETE',
     });
     if (!response.ok) {
