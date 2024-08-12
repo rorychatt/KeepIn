@@ -183,8 +183,12 @@ function EmployeesTable() {
 const EmployeeManagerMain = ({module}: { module: Module }) => {
     return <div>
         <h2 className="text-2xl font-bold mb-4">{module.properties.name}</h2>
-        <p>{module.properties.description}</p>
         <EmployeesTable/>
+        <footer className="mt-4 p-4 bg-gray-100 border-t">
+            <p>{module.properties.description}</p>
+            <p>License: {module.properties.license}</p>
+            <p>Version: {module.properties.version}</p>
+        </footer>
     </div>
 }
 
