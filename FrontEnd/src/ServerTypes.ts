@@ -28,7 +28,7 @@ export type AddEmployeeRequest = {
     Email: string;
     PhoneNumber: string;
     Address: string;
-    Role: RoleEnum;
+    Role: number;
 }
 
 export type ServerUserResponse = {
