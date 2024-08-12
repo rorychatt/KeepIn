@@ -1,12 +1,16 @@
 import './App.css'
-import React, {useEffect, useState} from "react";
+import React, {lazy, Suspense, useEffect, useState} from "react";
 import * as ServerTypes from "./ServerTypes.ts";
 import {fetchModulesAsync} from "./api.ts";
 import {NavBar} from "./Elements/NavBar.tsx";
 import {LoginModal} from "./Elements/LoginModal.tsx";
 import {ModuleListItem} from "./Elements/ModuleListItem.tsx";
 
-
+const modulePaths: { [key: string]: React.LazyExoticComponent<React.ComponentType<{ module: ServerTypes.Module }>> } = {
+    "Employee Manager": lazy(() => import('./Elements/EmployeeManager/EmployeeManagerMain.tsx')),
+    // "Module Name": lazy(() => import('./Elements/ModuleName/ModuleNameMain.tsx')),
+    // Add more mappings as needed
+};
 
 function MainWindow({isAuthenticated}: {
     isAuthenticated: boolean,
@@ -15,7 +19,7 @@ function MainWindow({isAuthenticated}: {
 
     const [modules, setModules] = useState<ServerTypes.Module[]>([]);
     const [selectedModule, setSelectedModule] = useState<ServerTypes.Module | null>(null);
-    
+
     useEffect(() => {
         if (isAuthenticated) {
             fetchModulesAsync()
@@ -31,17 +35,19 @@ function MainWindow({isAuthenticated}: {
         setSelectedModule(null);
     };
 
+    const SelectedModuleComponent = selectedModule
+        ? modulePaths[selectedModule.properties.name]
+        : null;
+
     return (
         <div className={"min-h-screen bg-gray-100"}>
             <NavBar/>
-            {selectedModule ? (
+            {selectedModule && SelectedModuleComponent ? (
                 <div className="p-4">
                     <button onClick={handleBackClick} className="mb-4 text-blue-500">Back</button>
-                    <div>
-                        {/* Render the selected module's content here */}
-                        <h2 className="text-2xl font-bold mb-4">{selectedModule.properties.name}</h2>
-                        <p>{selectedModule.properties.description}</p>
-                    </div>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <SelectedModuleComponent module={selectedModule}/>
+                    </Suspense>
                 </div>
             ) : (
                 <article className="p-4 flex flex-wrap justify-center gap-4">
