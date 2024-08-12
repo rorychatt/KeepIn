@@ -1,5 +1,5 @@
 ﻿
-import {Module, Employee, RoleEnum} from "../../ServerTypes.ts";
+import {Module, Employee, RoleEnum, AddEmployeeRequest} from "../../ServerTypes.ts";
 import {addEmployeeAsync, deleteEmployeeAsync, fetchEmployeesAsync, updateEmployeeAsync} from "../../api.ts";
 import React, {useEffect, useState} from "react";
 
@@ -31,7 +31,14 @@ function EmployeesTable() {
 
     const handleAddEmployee = async () => {
         try {
-            const addedEmployee = await addEmployeeAsync(newEmployee);
+            const addEmployeeRequest: AddEmployeeRequest = {
+                Name: newEmployee.name,
+                Email: newEmployee.email,
+                PhoneNumber: newEmployee.phoneNumber,
+                Address: newEmployee.address,
+                Role: newEmployee.role,
+            };
+            const addedEmployee = await addEmployeeAsync(addEmployeeRequest);
             setEmployees(prevEmployees => [...prevEmployees, addedEmployee]);
             setNewEmployee({
                 id: '',
@@ -85,23 +92,23 @@ function EmployeesTable() {
             <table className="min-w-full bg-white border border-gray-200">
                 <thead>
                 <tr className="bg-gray-100 border-b">
-                    <th className="py-2 px-4 text-left">Name</th>
-                    <th className="py-2 px-4 text-left">Email</th>
-                    <th className="py-2 px-4 text-left">Phone Number</th>
-                    <th className="py-2 px-4 text-left">Address</th>
-                    <th className="py-2 px-4 text-left">Role</th>
-                    <th className="py-2 px-4 text-left">Actions</th>
+                    <th className="py-2 px-4 text-center">Name</th>
+                    <th className="py-2 px-4 text-center">Email</th>
+                    <th className="py-2 px-4 text-center">Phone Number</th>
+                    <th className="py-2 px-4 text-center">Address</th>
+                    <th className="py-2 px-4 text-center">Role</th>
+                    <th className="py-2 px-4 text-center">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 {employees.map(employee => (
                     <tr key={employee.id} className="border-b hover:bg-gray-50">
-                        <td className="py-2 px-4">{employee.name}</td>
-                        <td className="py-2 px-4">{employee.email}</td>
-                        <td className="py-2 px-4">{employee.phoneNumber}</td>
-                        <td className="py-2 px-4">{employee.address}</td>
-                        <td className="py-2 px-4">{RoleEnum[employee.role]}</td>
-                        <td className="py-2 px-4">
+                        <td className="py-2 px-4 text-center">{employee.name}</td>
+                        <td className="py-2 px-4 text-center">{employee.email}</td>
+                        <td className="py-2 px-4 text-center">{employee.phoneNumber}</td>
+                        <td className="py-2 px-4 text-center">{employee.address}</td>
+                        <td className="py-2 px-4 text-center">{RoleEnum[employee.role]}</td>
+                        <td className="py-2 px-4 text-center">
                             <button onClick={() => handleEditEmployee(employee)} className="bg-yellow-500 text-white p-1 rounded">
                                 Edit
                             </button>
