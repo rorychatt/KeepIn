@@ -56,6 +56,15 @@ export async function updateEmployeeAsync(employee: Employee): Promise<Employee>
     return response.json();
 }
 
+export async function deleteEmployeeAsync(employeeId: string): Promise<void> {
+    const response = await fetch(`http://localhost:5126/api/Employees/${employeeId}`, {
+        method: 'DELETE',
+    });
+    if (!response.ok) {
+        throw new Error('Failed to delete employee');
+    }
+}
+
 export const MOCK_SERVER_EMPLOYEES_RESPONSE: ServerEmployeesResponse = [
     {
         "id": "employee_e5fff2f8-4969-4bb0-8012-ea85202c0bca",

@@ -1,6 +1,6 @@
 ﻿
 import {Module, Employee, RoleEnum} from "../../ServerTypes.ts";
-import {addEmployeeAsync, fetchEmployeesAsync, updateEmployeeAsync} from "../../api.ts";
+import {addEmployeeAsync, deleteEmployeeAsync, fetchEmployeesAsync, updateEmployeeAsync} from "../../api.ts";
 import React, {useEffect, useState} from "react";
 
 function EmployeesTable() {
@@ -71,6 +71,15 @@ function EmployeesTable() {
         }
     };
 
+    const handleDeleteEmployee = async (employeeId: string) => {
+        try {
+            await deleteEmployeeAsync(employeeId);
+            setEmployees(prevEmployees => prevEmployees.filter(emp => emp.id !== employeeId));
+        } catch (error) {
+            console.error('Error deleting employee:', error);
+        }
+    };
+
     return (
         <div className="overflow-x-auto">
             <table className="min-w-full bg-white border border-gray-200">
@@ -95,6 +104,9 @@ function EmployeesTable() {
                         <td className="py-2 px-4">
                             <button onClick={() => handleEditEmployee(employee)} className="bg-yellow-500 text-white p-1 rounded">
                                 Edit
+                            </button>
+                            <button onClick={() => handleDeleteEmployee(employee.id)} className="bg-red-500 text-white p-1 rounded ml-2">
+                                Delete
                             </button>
                         </td>
                     </tr>
