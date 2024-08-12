@@ -80,6 +80,7 @@ public class EmployeeManagerTests
 
         employeeManager.AddEmployee(employee);
         employeeManager.UpdateEmployee(employee.Id, new Employee().SetRole(Role.Admin));
-        employee.Role.Should().Be(Role.Admin);
+        
+        employeeManager.GetEmployeeById(employee.Id)!.Role.Should().Be(Role.Admin);
     }
 }

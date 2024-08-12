@@ -16,7 +16,7 @@ public class EmployeeManagerControllerTests(WebApplicationFactory<Program> facto
     [Fact]
     public void AddEmployeeRequest_ShouldConvert()
     {
-        var addEmployeeRequest = new AddEmployeeRequest("aaa", "bbb", "111", "222", Role.Manager);
+        var addEmployeeRequest = new AddEmployeeRequest("aaa", "bbb", "111", "222", "Manager");
 
         var employee = (Employee)addEmployeeRequest;
 
@@ -38,15 +38,8 @@ public class EmployeeManagerControllerTests(WebApplicationFactory<Program> facto
     [Fact]
     public async Task Should_Add_Employee()
     {
-        var employee = new Employee
-        {
-            Name = "John Doe",
-            Email = "John_doe@gmail.com",
-            PhoneNumber = "123456789",
-            Address = "1234 Main St, City, Country",
-            Role = Role.Admin
-        };
-
+        var employee = new AddEmployeeRequest("John Doe", "John_doe@gmail.com", "123456789", "1234 Main St, City, Country", "Admin");
+        
         var response = await _client.PostAsJsonAsync(BaseUrl, employee);
 
         response.StatusCode.Should().Be(HttpStatusCode.Created);

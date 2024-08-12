@@ -29,6 +29,8 @@ export async function fetchEmployeesAsync(): Promise<ServerEmployeesResponse> {
 }
 
 export async function addEmployeeAsync(addEmployeeRequest: AddEmployeeRequest): Promise<Employee> {
+    
+    console.log(addEmployeeRequest);
 
     const response = await fetch('http://localhost:5126/api/EmployeeManager', {
         method: 'POST',
