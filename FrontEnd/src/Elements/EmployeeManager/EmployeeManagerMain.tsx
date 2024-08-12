@@ -62,9 +62,6 @@ function EmployeesTable() {
         try {
             const updatedEmployee = await updateEmployeeAsync(newEmployee);
             
-            console.log(updatedEmployee)
-            console.log(employees)
-            
             setEmployees(prevEmployees =>
                 prevEmployees.map(emp => (emp.id === updatedEmployee.id ? updatedEmployee : emp))
             );
