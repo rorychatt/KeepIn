@@ -88,38 +88,40 @@ function EmployeesTable() {
     };
 
     return (
-        <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-200">
-                <thead>
-                <tr className="bg-gray-100 border-b">
-                    <th className="py-2 px-4 text-center">Name</th>
-                    <th className="py-2 px-4 text-center">Email</th>
-                    <th className="py-2 px-4 text-center">Phone Number</th>
-                    <th className="py-2 px-4 text-center">Address</th>
-                    <th className="py-2 px-4 text-center">Role</th>
-                    <th className="py-2 px-4 text-center">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {employees.map(employee => (
-                    <tr key={employee.id} className="border-b hover:bg-gray-50">
-                        <td className="py-2 px-4 text-center">{employee.name}</td>
-                        <td className="py-2 px-4 text-center">{employee.email}</td>
-                        <td className="py-2 px-4 text-center">{employee.phoneNumber}</td>
-                        <td className="py-2 px-4 text-center">{employee.address}</td>
-                        <td className="py-2 px-4 text-center">{RoleEnum[employee.role]}</td>
-                        <td className="py-2 px-4 text-center">
-                            <button onClick={() => handleEditEmployee(employee)} className="bg-yellow-500 text-white p-1 rounded">
-                                Edit
-                            </button>
-                            <button onClick={() => handleDeleteEmployee(employee.id)} className="bg-red-500 text-white p-1 rounded ml-2">
-                                Delete
-                            </button>
-                        </td>
+        <article>
+            <div className="overflow-x-auto">
+                <table className="min-w-full bg-white border border-gray-200">
+                    <thead>
+                    <tr className="bg-gray-100 border-b">
+                        <th className="py-2 px-4 text-center">Name</th>
+                        <th className="py-2 px-4 text-center">Email</th>
+                        <th className="py-2 px-4 text-center">Phone Number</th>
+                        <th className="py-2 px-4 text-center">Address</th>
+                        <th className="py-2 px-4 text-center">Role</th>
+                        <th className="py-2 px-4 text-center">Actions</th>
                     </tr>
-                ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {employees.map(employee => (
+                        <tr key={employee.id} className="border-b hover:bg-gray-50">
+                            <td className="py-2 px-4 text-center">{employee.name}</td>
+                            <td className="py-2 px-4 text-center">{employee.email}</td>
+                            <td className="py-2 px-4 text-center">{employee.phoneNumber}</td>
+                            <td className="py-2 px-4 text-center">{employee.address}</td>
+                            <td className="py-2 px-4 text-center">{RoleEnum[employee.role]}</td>
+                            <td className="py-2 px-4 text-center">
+                                <button onClick={() => handleEditEmployee(employee)} className="bg-yellow-500 text-white p-1 rounded">
+                                    Edit
+                                </button>
+                                <button onClick={() => handleDeleteEmployee(employee.id)} className="bg-red-500 text-white p-1 rounded ml-2">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
             <div className="mt-4">
                 <h3 className="text-xl mb-2">{isEditing ? "Edit Employee" : "Add New Employee"}</h3>
                 <input
@@ -175,7 +177,7 @@ function EmployeesTable() {
                     {isEditing ? "Update Employee" : "Add Employee"}
                 </button>
             </div>
-        </div>
+        </article>
     );
 }
 const EmployeeManagerMain = ({module}: { module: Module }) => {
