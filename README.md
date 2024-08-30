@@ -1,5 +1,6 @@
 # KeepIn
 Inventory, Messaging and Handling system for E-commerce and businesses
+See live demo: https://rorychatt.github.io/KeepIn/
 
 # Features
 
