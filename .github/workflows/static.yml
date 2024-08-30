@@ -41,6 +41,8 @@ jobs:
         working-directory: ./FrontEnd
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: List build directory
+        run: ls -la ./FrontEnd/dist
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
