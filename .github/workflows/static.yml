@@ -29,12 +29,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: ls
-        run: ls
-      - name: Navigate to correct folder
-        run: cd ./FrontEnd
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Navigate to correct folder
+        run: cd ./FrontEnd
       - name: Setup Node
         uses: actions/setup-node@v4.0.3
       - name: Install dependencies
