@@ -18,7 +18,7 @@ jobs:
       with:
         host: ${{ secrets.VPS_HOST }}
         username: ${{ secrets.VPS_USER }}
-        key: ${{ secrets.VPS_KEY }}
+        password: ${{ secrets.VPS_PASSWORD }}
         source: "."
         target: "/root/git/rorychatt/KeepIn"
 
@@ -27,5 +27,5 @@ jobs:
       with:
         host: ${{ secrets.VPS_HOST }}
         username: ${{ secrets.VPS_USER }}
-        key: ${{ secrets.VPS_KEY }}
+        password: ${{ secrets.VPS_PASSWORD }}
         script: "cd /root/git/rorychatt/KeepIn && ./deploy.sh"
